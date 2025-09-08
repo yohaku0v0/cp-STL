@@ -8,7 +8,7 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
@@ -18,6 +18,9 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+    title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
@@ -207,6 +210,7 @@ data:
   timestamp: '2025-09-09 02:59:15+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/math/StaticModint.hpp
 layout: document

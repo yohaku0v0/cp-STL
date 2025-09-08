@@ -11,10 +11,13 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+    title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -226,8 +229,9 @@ data:
   path: cpstl/ds/Segtree.hpp
   requiredBy: []
   timestamp: '2025-09-09 03:12:31+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
 documentation_of: cpstl/ds/Segtree.hpp
 layout: document
 redirect_from:
