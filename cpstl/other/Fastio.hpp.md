@@ -8,6 +8,9 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy:
+  - icon: ':warning:'
+    path: cpstl/ds/Segtree.hpp
+    title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
@@ -236,6 +239,7 @@ data:
   isVerificationFile: false
   path: cpstl/other/Fastio.hpp
   requiredBy:
+  - cpstl/ds/Segtree.hpp
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   timestamp: '2025-09-09 02:59:15+09:00'

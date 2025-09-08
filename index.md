@@ -1,6 +1,11 @@
 ---
 data:
   libraryCategories:
+  - name: cpstl/ds
+    pages:
+    - icon: ':warning:'
+      path: cpstl/ds/Segtree.hpp
+      title: cpstl/ds/Segtree.hpp
   - name: cpstl/math
     pages:
     - icon: ':heavy_check_mark:'

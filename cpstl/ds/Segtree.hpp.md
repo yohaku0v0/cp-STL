@@ -7,23 +7,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: cpstl/ds/Segtree.hpp
-    title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
-    path: cpstl/math/StaticModint.hpp
-    title: cpstl/math/StaticModint.hpp
-  - icon: ':heavy_check_mark:'
-    path: cpstl/other/Fastio.hpp
-    title: cpstl/other/Fastio.hpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-    title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
+    path: cpstl/other/Template.hpp
+    title: cpstl/other/Template.hpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -150,33 +141,97 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n"
-  code: '#pragma once
-
-    #include <bits/stdc++.h>
-
-    #include "cpstl/math/StaticModint.hpp"
-
-    #include "cpstl/other/Fastio.hpp"
-
-    '
+    using Fastio::flush;\n\n};\n#line 3 \"cpstl/ds/Segtree.hpp\"\n\nnamespace cpstd\
+    \ {\n\ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Segtree {\n\t\
+    private:\n\tstd::vector<S> dat;\n\tint N, sz;\n\n\tpublic:\n\tSegtree() {}\n\t\
+    explicit Segtree(int n) : Segtree(std::vector<S>(n, e())) {}\n\texplicit Segtree(int\
+    \ n, const S &init) : Segtree(std::vector<S>(n, init)) {}\n\texplicit Segtree(const\
+    \ std::vector<S> &v) : N((int)v.size()) {\n\t\tsz = 1;\n\t\twhile (sz < N) sz\
+    \ <<= 1;\n\t\tdat.assign(sz << 1, e());\n\t\tfor (int i = 0; i < N; ++i) dat[i\
+    \ + sz] = v[i];\n\t\tfor (int i = sz - 1; i >= 1; --i) dat[i] = op(dat[i << 1],\
+    \ dat[i << 1 | 1]);\n\t}\n\ttemplate <class Inputit>\n\tSegtree(Inputit first,\
+    \ Inputit last) : Segtree(std::vector<S>(first, last)) {}\n\n\tvoid set(int pos,\
+    \ const S &x) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos]\
+    \ = x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos <<\
+    \ 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\tvoid add(int pos, const S &x) {\n\t\
+    \tassert(0 <= pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos] += x;\n\t\twhile\
+    \ (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos <<\
+    \ 1 | 1]);\n\t\t}\n\t}\n\n\ttemplate <\n\t\ttypename F,\n\t\tauto mapping\n\t\
+    >\n\tvoid set(int pos, const F &f) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos\
+    \ += sz;\n\t\tdat[pos] = mapping(f, dat[pos]);\n\t\twhile (pos > 1) {\n\t\t\t\
+    pos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t\
+    }\n\n\tconst S& get(int pos) const {\n\t\tassert(0 <= pos && pos < N);\n\t\treturn\
+    \ dat[pos + sz];\n\t}\n\n\tconst S& operator[](int pos) const noexcept { return\
+    \ dat[pos + sz]; }\n\n\tS fold(int l, int r) const {\n\t\tassert(0 <= l && l <=\
+    \ r && r <= N);\n\t\tif (l == r) return e();\n\t\tS resl = e(), resr = e();\n\t\
+    \tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\t\t\tif (l & 1) resl = op(resl,\
+    \ dat[l++]);\n\t\t\tif (r & 1) resr = op(dat[--r], resr);\n\t\t}\n\t\treturn op(resl,\
+    \ resr);\n\t}\n\n\tS all_fold() const { return dat[1]; }\n\n\ttemplate <typename\
+    \ F>\n\tint max_right(int l, const F& f) const {\n\t\tassert(0 <= l && l <= N);\n\
+    \t\tassert(f(e()));\n\t\tif (l == N) return N;\n\t\tl += sz;\n\t\tS s = e();\n\
+    \t\tdo {\n\t\t\twhile (!(l & 1)) l >>= 1;\n\t\t\tif (!f(op(s, dat[l]))) {\n\t\t\
+    \t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (f(op(s, dat[l]))) s =\
+    \ op(s, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\t}\n\t\t\ts = op(s,\
+    \ dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn N;\n\t}\n\n\ttemplate <typename\
+    \ F>\n\tint min_left(int r, const F &f) const {\n\t\tassert(0 <= r && r <= N);\n\
+    \t\tassert(f(e()));\n\t\tif (r == 0) return 0;\n\t\tr += sz;\n\t\tS s = e();\n\
+    \t\tdo {\n\t\t\t--r;\n\t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(op(dat[r],\
+    \ s))) {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r << 1 | 1;\n\t\t\t\t\tif (f(op(dat[r],\
+    \ s))) s = op(dat[r--], s);\n\t\t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\
+    \t\ts = op(dat[r], s);\n\t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n\
+    };\n"
+  code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
+    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Segtree {\n\tprivate:\n\
+    \tstd::vector<S> dat;\n\tint N, sz;\n\n\tpublic:\n\tSegtree() {}\n\texplicit Segtree(int\
+    \ n) : Segtree(std::vector<S>(n, e())) {}\n\texplicit Segtree(int n, const S &init)\
+    \ : Segtree(std::vector<S>(n, init)) {}\n\texplicit Segtree(const std::vector<S>\
+    \ &v) : N((int)v.size()) {\n\t\tsz = 1;\n\t\twhile (sz < N) sz <<= 1;\n\t\tdat.assign(sz\
+    \ << 1, e());\n\t\tfor (int i = 0; i < N; ++i) dat[i + sz] = v[i];\n\t\tfor (int\
+    \ i = sz - 1; i >= 1; --i) dat[i] = op(dat[i << 1], dat[i << 1 | 1]);\n\t}\n\t\
+    template <class Inputit>\n\tSegtree(Inputit first, Inputit last) : Segtree(std::vector<S>(first,\
+    \ last)) {}\n\n\tvoid set(int pos, const S &x) {\n\t\tassert(0 <= pos && pos <\
+    \ N);\n\t\tpos += sz;\n\t\tdat[pos] = x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>=\
+    \ 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\t\
+    void add(int pos, const S &x) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos +=\
+    \ sz;\n\t\tdat[pos] += x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos]\
+    \ = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\ttemplate <\n\t\ttypename\
+    \ F,\n\t\tauto mapping\n\t>\n\tvoid set(int pos, const F &f) {\n\t\tassert(0 <=\
+    \ pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos] = mapping(f, dat[pos]);\n\t\t\
+    while (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos\
+    \ << 1 | 1]);\n\t\t}\n\t}\n\n\tconst S& get(int pos) const {\n\t\tassert(0 <=\
+    \ pos && pos < N);\n\t\treturn dat[pos + sz];\n\t}\n\n\tconst S& operator[](int\
+    \ pos) const noexcept { return dat[pos + sz]; }\n\n\tS fold(int l, int r) const\
+    \ {\n\t\tassert(0 <= l && l <= r && r <= N);\n\t\tif (l == r) return e();\n\t\t\
+    S resl = e(), resr = e();\n\t\tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1)\
+    \ {\n\t\t\tif (l & 1) resl = op(resl, dat[l++]);\n\t\t\tif (r & 1) resr = op(dat[--r],\
+    \ resr);\n\t\t}\n\t\treturn op(resl, resr);\n\t}\n\n\tS all_fold() const { return\
+    \ dat[1]; }\n\n\ttemplate <typename F>\n\tint max_right(int l, const F& f) const\
+    \ {\n\t\tassert(0 <= l && l <= N);\n\t\tassert(f(e()));\n\t\tif (l == N) return\
+    \ N;\n\t\tl += sz;\n\t\tS s = e();\n\t\tdo {\n\t\t\twhile (!(l & 1)) l >>= 1;\n\
+    \t\t\tif (!f(op(s, dat[l]))) {\n\t\t\t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\
+    \t\t\t\t\tif (f(op(s, dat[l]))) s = op(s, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn\
+    \ l - sz;\n\t\t\t}\n\t\t\ts = op(s, dat[l++]);\n\t\t} while ((l & -l) != l);\n\
+    \t\treturn N;\n\t}\n\n\ttemplate <typename F>\n\tint min_left(int r, const F &f)\
+    \ const {\n\t\tassert(0 <= r && r <= N);\n\t\tassert(f(e()));\n\t\tif (r == 0)\
+    \ return 0;\n\t\tr += sz;\n\t\tS s = e();\n\t\tdo {\n\t\t\t--r;\n\t\t\twhile (r\
+    \ > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(op(dat[r], s))) {\n\t\t\t\twhile (r <\
+    \ sz) {\n\t\t\t\t\tr = r << 1 | 1;\n\t\t\t\t\tif (f(op(dat[r], s))) s = op(dat[r--],\
+    \ s);\n\t\t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\t\ts = op(dat[r], s);\n\
+    \t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n};\n"
   dependsOn:
+  - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
   isVerificationFile: false
-  path: cpstl/other/Template.hpp
-  requiredBy:
-  - cpstl/ds/Segtree.hpp
-  - cpstl/other/Fastio.hpp
-  - cpstl/math/StaticModint.hpp
-  timestamp: '2025-09-09 02:59:15+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-documentation_of: cpstl/other/Template.hpp
+  path: cpstl/ds/Segtree.hpp
+  requiredBy: []
+  timestamp: '2025-09-09 03:12:31+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: cpstl/ds/Segtree.hpp
 layout: document
 redirect_from:
-- /library/cpstl/other/Template.hpp
-- /library/cpstl/other/Template.hpp.html
-title: cpstl/other/Template.hpp
+- /library/cpstl/ds/Segtree.hpp
+- /library/cpstl/ds/Segtree.hpp.html
+title: cpstl/ds/Segtree.hpp
 ---
