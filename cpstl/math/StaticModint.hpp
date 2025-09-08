@@ -1,12 +1,7 @@
 #pragma once
-
 #include "cpstl/other/Template.hpp"
 
 namespace cpstd {
-
-// @brief Static Modint
-
-// @see https://hackmd.io/@tatyam-prime/rkVCOcwQn
 
 template <uint32_t m>
 struct StaticModint {
@@ -131,5 +126,5 @@ struct StaticModint {
 
 using Modint998244353 = StaticModint<998244353>;
 
-friend constexpr Modint998244353 operator""_M(unsigned long long x) { return x; }
+constexpr Modint998244353 operator""_M(unsigned long long x) { return x; }
 };
