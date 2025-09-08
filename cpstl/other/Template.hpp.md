@@ -1,23 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: cpstl/math/StaticModint.hpp
     title: Static Modint
-  - icon: ':warning:'
+  - icon: ':x:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':x:'
     path: cpstl/math/StaticModint.hpp
     title: Static Modint
-  - icon: ':warning:'
+  - icon: ':x:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
+    title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -165,8 +168,9 @@ data:
   - cpstl/other/Fastio.hpp
   - cpstl/math/StaticModint.hpp
   timestamp: '2025-09-09 02:53:36+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/other/Template.hpp
 layout: document
 redirect_from:
