@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: cpstl/ds/Dsu.hpp
+    title: cpstl/ds/Dsu.hpp
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
   - icon: ':heavy_check_mark:'
@@ -11,30 +14,32 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/ds/lc-Union-Find-Dsu.test.cpp
-    title: verify/ds/lc-Union-Find-Dsu.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
-    \ 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace cpstd {\n\ntemplate <uint32_t\
-    \ m>\nstruct StaticModint {\n\tprivate:\n\tusing mint = StaticModint;\n\tuint32_t\
-    \ _v = 0;\n\n\tstatic constexpr bool is_prime = []() -> bool {\n\t\tif (m == 1)\
-    \ return false;\n\t\tif (m == 2 || m == 7 || m == 61) return true;\n\t\tif (!(m\
-    \ & 1)) return false;\n\t\tuint32_t d = m - 1;\n\t\twhile (!(d & 1)) d >>= 1;\n\
-    \t\tfor (uint32_t a : {2, 7, 61}) {\n\t\t\tuint32_t t = d;\n\t\t\tmint y = mint(a).pow(t);\n\
-    \t\t\twhile (t != m - 1 && y != 1 && y != m - 1) {\n\t\t\t\ty *= y;\n\t\t\t\t\
-    t <<= 1;\n\t\t\t}\n\t\t\tif (y != m - 1 && !(t & 1)) return false;\n\t\t}\n\t\t\
-    return true;\n\t}();\n\t\n\tstatic constexpr std::pair<int32_t, int32_t> inv_gcd(int32_t\
-    \ a, int32_t b) {\n\t\tif (a == 0) return {b, 0};\n\t\tint32_t s = b, t = a, m0\
-    \ = 0, m1 = 1;\n\t\twhile (t) {\n\t\t\tconst int32_t q = s / t;\n\t\t\ts -= t\
-    \ * q, std::swap(s, t);\n\t\t\tm0 -= m1 * q, std::swap(m0, m1);\n\t\t}\n\t\tif\
-    \ (m0 < 0) m0 += b / s;\n\t\treturn {s, m0};\n\t}\n\n\tpublic:\n\tconstexpr StaticModint()\
-    \ {}\n\ttemplate <typename T>\n\tconstexpr StaticModint(T v) {\n\t\tstatic_assert(std::is_integral_v<T>,\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/unionfind
+    links:
+    - https://judge.yosupo.jp/problem/unionfind
+  bundledCode: "#line 1 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.yosupo.jp/problem/unionfind\"\n\n#line 2 \"cpstl/other/Template.hpp\"\
+    \n#include <bits/stdc++.h>\n#line 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace\
+    \ cpstd {\n\ntemplate <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\tusing\
+    \ mint = StaticModint;\n\tuint32_t _v = 0;\n\n\tstatic constexpr bool is_prime\
+    \ = []() -> bool {\n\t\tif (m == 1) return false;\n\t\tif (m == 2 || m == 7 ||\
+    \ m == 61) return true;\n\t\tif (!(m & 1)) return false;\n\t\tuint32_t d = m -\
+    \ 1;\n\t\twhile (!(d & 1)) d >>= 1;\n\t\tfor (uint32_t a : {2, 7, 61}) {\n\t\t\
+    \tuint32_t t = d;\n\t\t\tmint y = mint(a).pow(t);\n\t\t\twhile (t != m - 1 &&\
+    \ y != 1 && y != m - 1) {\n\t\t\t\ty *= y;\n\t\t\t\tt <<= 1;\n\t\t\t}\n\t\t\t\
+    if (y != m - 1 && !(t & 1)) return false;\n\t\t}\n\t\treturn true;\n\t}();\n\t\
+    \n\tstatic constexpr std::pair<int32_t, int32_t> inv_gcd(int32_t a, int32_t b)\
+    \ {\n\t\tif (a == 0) return {b, 0};\n\t\tint32_t s = b, t = a, m0 = 0, m1 = 1;\n\
+    \t\twhile (t) {\n\t\t\tconst int32_t q = s / t;\n\t\t\ts -= t * q, std::swap(s,\
+    \ t);\n\t\t\tm0 -= m1 * q, std::swap(m0, m1);\n\t\t}\n\t\tif (m0 < 0) m0 += b\
+    \ / s;\n\t\treturn {s, m0};\n\t}\n\n\tpublic:\n\tconstexpr StaticModint() {}\n\
+    \ttemplate <typename T>\n\tconstexpr StaticModint(T v) {\n\t\tstatic_assert(std::is_integral_v<T>,\
     \ \"T is not integral type.\");\n\t\tif constexpr (std::is_signed_v<T>) {\n\t\t\
     \tint64_t x = int64_t(v % int64_t(m));\n\t\t\tif (x < 0) x += m;\n\t\t\t_v = uint32_t(x);\n\
     \t\t}\n\t\telse _v = uint32_t(v % m);\n\t}\n\n\tstatic constexpr mint raw(uint32_t\
@@ -163,42 +168,32 @@ data:
     \t}\n\n\tstd::vector<std::vector<int>> groups() {\n\t\tstd::vector<std::vector<int>>\
     \ mem, res;\n\t\tfor (int i = 0; i < _n; ++i) mem[_leader(i)].push_back(i);\n\t\
     \tfor (int i = 0; i < _n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
-  code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Dsu {\n\tprivate:\n\
-    \tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\tint _leader(int x) {\n\t\
-    \treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\t}\n\
-    \n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()}) {}\n\
-    \tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\t\
-    \tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
-    \ x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(int\
-    \ a, int b) {\n\t\tassert(0 <= a && a < _n);\n\t\tassert(0 <= b && b < _n);\n\t\
-    \ta = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
-    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
-    tree[a].second = op(tree[a].second, tree[b].second);\n\t\ttree[b].first = a;\n\
-    \t\treturn true;\n\t}\n\n\tbool same(int a, int b) {\n\t\tassert(0 <= a && a <\
-    \ _n);\n\t\tassert(0 <= b && b < _n);\n\t\treturn _leader(a) == _leader(b);\n\t\
-    }\n\n\tint size(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn -tree[_leader(x)].first;\n\
-    \t}\n\n\tconst S fold(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn tree[_leader(x)].first;\n\
-    \t}\n\n\tstd::vector<std::vector<int>> groups() {\n\t\tstd::vector<std::vector<int>>\
-    \ mem, res;\n\t\tfor (int i = 0; i < _n; ++i) mem[_leader(i)].push_back(i);\n\t\
-    \tfor (int i = 0; i < _n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
+    \t\t}\n\t\treturn res;\n\t}\n};\n};\n#line 5 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\
+    \n\nint op(int a, int b) { return a; }\nint e() { return 0; }\n\nint main() {\n\
+    \tint N, Q;\n\tcpstd::input(N, Q);\n\tcpstd::Dsu<int, op, e> dsu(N);\n\tint t,\
+    \ u, v;\n\twhile (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u,\
+    \ v);\n\t\telse cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind\"\n\n#include\
+    \ \"cpstl/other/Template.hpp\"\n#include \"cpstl/ds/Dsu.hpp\"\n\nint op(int a,\
+    \ int b) { return a; }\nint e() { return 0; }\n\nint main() {\n\tint N, Q;\n\t\
+    cpstd::input(N, Q);\n\tcpstd::Dsu<int, op, e> dsu(N);\n\tint t, u, v;\n\twhile\
+    \ (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u, v);\n\t\t\
+    else cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
-  isVerificationFile: false
-  path: cpstl/ds/Dsu.hpp
+  - cpstl/ds/Dsu.hpp
+  isVerificationFile: true
+  path: verify/ds/lc-Union-Find-Dsu.test.cpp
   requiredBy: []
-  timestamp: '2025-09-27 03:52:50+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/ds/lc-Union-Find-Dsu.test.cpp
-documentation_of: cpstl/ds/Dsu.hpp
+  timestamp: '2025-09-27 03:53:55+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: verify/ds/lc-Union-Find-Dsu.test.cpp
 layout: document
 redirect_from:
-- /library/cpstl/ds/Dsu.hpp
-- /library/cpstl/ds/Dsu.hpp.html
-title: cpstl/ds/Dsu.hpp
+- /verify/verify/ds/lc-Union-Find-Dsu.test.cpp
+- /verify/verify/ds/lc-Union-Find-Dsu.test.cpp.html
+title: verify/ds/lc-Union-Find-Dsu.test.cpp
 ---

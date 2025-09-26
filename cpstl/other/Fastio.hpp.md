@@ -8,7 +8,7 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/Dsu.hpp
     title: cpstl/ds/Dsu.hpp
   - icon: ':heavy_check_mark:'
@@ -24,6 +24,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
     title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/ds/lc-Union-Find-Dsu.test.cpp
+    title: verify/ds/lc-Union-Find-Dsu.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
@@ -253,6 +256,7 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+  - verify/ds/lc-Union-Find-Dsu.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/other/Fastio.hpp
 layout: document

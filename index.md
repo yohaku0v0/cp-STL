@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: cpstl/ds
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: cpstl/ds/Dsu.hpp
       title: cpstl/ds/Dsu.hpp
     - icon: ':heavy_check_mark:'
@@ -28,6 +28,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
       title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/ds/lc-Union-Find-Dsu.test.cpp
+      title: verify/ds/lc-Union-Find-Dsu.test.cpp
   - name: verify/other
     pages:
     - icon: ':heavy_check_mark:'
