@@ -7,29 +7,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: cpstl/ds/Dsu.hpp
-    title: cpstl/ds/Dsu.hpp
   - icon: ':heavy_check_mark:'
-    path: cpstl/ds/Segtree.hpp
-    title: cpstl/ds/Segtree.hpp
-  - icon: ':heavy_check_mark:'
-    path: cpstl/math/StaticModint.hpp
-    title: cpstl/math/StaticModint.hpp
-  - icon: ':heavy_check_mark:'
-    path: cpstl/other/Fastio.hpp
-    title: cpstl/other/Fastio.hpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-    title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-    title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
+    path: cpstl/other/Template.hpp
+    title: cpstl/other/Template.hpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -156,35 +141,60 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n"
-  code: '#pragma once
-
-    #include <bits/stdc++.h>
-
-    #include "cpstl/math/StaticModint.hpp"
-
-    #include "cpstl/other/Fastio.hpp"
-
-    '
+    using Fastio::flush;\n\n};\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\
+    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Dsu {\n\tprivate:\n\
+    \tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\tint _leader(int x) {\n\t\
+    \treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\t}\n\
+    \n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()}) {}\n\
+    \tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\t\
+    \tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
+    \ x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(int\
+    \ a, int b) {\n\t\tassert(0 <= a && a < _n);\n\t\tassert(0 <= b && b < _n);\n\t\
+    \ta = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
+    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
+    tree[a].second = op(tree[a].second, tree[b].second);\n\t\ttree[b].first = a;\n\
+    \t\treturn true;\n\t}\n\n\tbool same(int a, int b) {\n\t\tassert(0 <= a && a <\
+    \ _n);\n\t\tassert(0 <= b && b < _n);\n\t\treturn _leader(a) == _leader(b);\n\t\
+    }\n\n\tint size(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn -tree[_leader(x)].first;\n\
+    \t}\n\n\tconst S fold(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn tree[_leader(x)].first;\n\
+    \t}\n\n\tstd::vector<std::vector<int>> groups() {\n\t\tstd::vector<std::vector<int>>\
+    \ mem, res;\n\t\tfor (int i = 0; i < _n; ++i) mem[_leader(i)].push_back(i);\n\t\
+    \tfor (int i = 0; i < _n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
+    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
+  code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
+    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Dsu {\n\tprivate:\n\
+    \tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\tint _leader(int x) {\n\t\
+    \treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\t}\n\
+    \n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()}) {}\n\
+    \tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\t\
+    \tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
+    \ x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(int\
+    \ a, int b) {\n\t\tassert(0 <= a && a < _n);\n\t\tassert(0 <= b && b < _n);\n\t\
+    \ta = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
+    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
+    tree[a].second = op(tree[a].second, tree[b].second);\n\t\ttree[b].first = a;\n\
+    \t\treturn true;\n\t}\n\n\tbool same(int a, int b) {\n\t\tassert(0 <= a && a <\
+    \ _n);\n\t\tassert(0 <= b && b < _n);\n\t\treturn _leader(a) == _leader(b);\n\t\
+    }\n\n\tint size(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn -tree[_leader(x)].first;\n\
+    \t}\n\n\tconst S fold(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn tree[_leader(x)].first;\n\
+    \t}\n\n\tstd::vector<std::vector<int>> groups() {\n\t\tstd::vector<std::vector<int>>\
+    \ mem, res;\n\t\tfor (int i = 0; i < _n; ++i) mem[_leader(i)].push_back(i);\n\t\
+    \tfor (int i = 0; i < _n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
+    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
   dependsOn:
+  - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
   isVerificationFile: false
-  path: cpstl/other/Template.hpp
-  requiredBy:
-  - cpstl/ds/Segtree.hpp
-  - cpstl/ds/Dsu.hpp
-  - cpstl/math/StaticModint.hpp
-  - cpstl/other/Fastio.hpp
-  timestamp: '2025-09-09 02:59:15+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-  - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-documentation_of: cpstl/other/Template.hpp
+  path: cpstl/ds/Dsu.hpp
+  requiredBy: []
+  timestamp: '2025-09-27 03:52:50+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: cpstl/ds/Dsu.hpp
 layout: document
 redirect_from:
-- /library/cpstl/other/Template.hpp
-- /library/cpstl/other/Template.hpp.html
-title: cpstl/other/Template.hpp
+- /library/cpstl/ds/Dsu.hpp
+- /library/cpstl/ds/Dsu.hpp.html
+title: cpstl/ds/Dsu.hpp
 ---

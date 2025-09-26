@@ -3,6 +3,9 @@ data:
   libraryCategories:
   - name: cpstl/ds
     pages:
+    - icon: ':warning:'
+      path: cpstl/ds/Dsu.hpp
+      title: cpstl/ds/Dsu.hpp
     - icon: ':heavy_check_mark:'
       path: cpstl/ds/Segtree.hpp
       title: cpstl/ds/Segtree.hpp
