@@ -159,7 +159,9 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n"
+    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
+    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing u32 = std::uint32_t;\nusing\
+    \ u64 = std::uint64_t;\nusing usize = std::size_t;\n"
   code: '#pragma once
 
     #include <bits/stdc++.h>
@@ -168,7 +170,16 @@ data:
 
     #include "cpstl/other/Fastio.hpp"
 
-    '
+
+    using i32 = std::int32_t;
+
+    using i64 = std::int64_t;
+
+    using u32 = std::uint32_t;
+
+    using u64 = std::uint64_t;
+
+    using usize = std::size_t;'
   dependsOn:
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
@@ -179,7 +190,7 @@ data:
   - cpstl/ds/Dsu.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-09-09 02:59:15+09:00'
+  timestamp: '2025-10-26 22:56:49+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp

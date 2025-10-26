@@ -144,13 +144,15 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Dsu {\n\tprivate:\n\
-    \tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\tint _leader(int x) {\n\t\
-    \treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\t}\n\
-    \n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()}) {}\n\
-    \tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\t\
-    \tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
+    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
+    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing u32 = std::uint32_t;\nusing\
+    \ u64 = std::uint64_t;\nusing usize = std::size_t;\n#line 3 \"cpstl/ds/Dsu.hpp\"\
+    \n\nnamespace cpstd {\n\ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\n\
+    class Dsu {\n\tprivate:\n\tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\
+    \tint _leader(int x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
+    \t}\n\n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()})\
+    \ {}\n\tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\
+    \t\tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
     \ x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(int\
     \ a, int b) {\n\t\tassert(0 <= a && a < _n);\n\t\tassert(0 <= b && b < _n);\n\t\
     \ta = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
@@ -191,7 +193,7 @@ data:
   isVerificationFile: false
   path: cpstl/ds/Dsu.hpp
   requiredBy: []
-  timestamp: '2025-09-27 03:52:50+09:00'
+  timestamp: '2025-10-26 22:56:49+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Union-Find-Dsu.test.cpp

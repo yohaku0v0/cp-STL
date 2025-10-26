@@ -144,83 +144,78 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 3 \"cpstl/ds/Segtree.hpp\"\n\nnamespace cpstd\
-    \ {\n\ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Segtree {\n\t\
-    private:\n\tstd::vector<S> dat;\n\tint N, sz;\n\n\tpublic:\n\tSegtree() {}\n\t\
-    explicit Segtree(int n) : Segtree(std::vector<S>(n, e())) {}\n\texplicit Segtree(int\
-    \ n, const S &init) : Segtree(std::vector<S>(n, init)) {}\n\texplicit Segtree(const\
-    \ std::vector<S> &v) : N((int)v.size()) {\n\t\tsz = 1;\n\t\twhile (sz < N) sz\
-    \ <<= 1;\n\t\tdat.assign(sz << 1, e());\n\t\tfor (int i = 0; i < N; ++i) dat[i\
-    \ + sz] = v[i];\n\t\tfor (int i = sz - 1; i >= 1; --i) dat[i] = op(dat[i << 1],\
-    \ dat[i << 1 | 1]);\n\t}\n\ttemplate <class Inputit>\n\tSegtree(Inputit first,\
-    \ Inputit last) : Segtree(std::vector<S>(first, last)) {}\n\n\tvoid set(int pos,\
-    \ const S &x) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos]\
-    \ = x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos <<\
-    \ 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\tvoid add(int pos, const S &x) {\n\t\
-    \tassert(0 <= pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos] += x;\n\t\twhile\
-    \ (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos <<\
-    \ 1 | 1]);\n\t\t}\n\t}\n\n\ttemplate <\n\t\ttypename F,\n\t\tauto mapping\n\t\
-    >\n\tvoid set(int pos, const F &f) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos\
-    \ += sz;\n\t\tdat[pos] = mapping(f, dat[pos]);\n\t\twhile (pos > 1) {\n\t\t\t\
-    pos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t\
-    }\n\n\tconst S& get(int pos) const {\n\t\tassert(0 <= pos && pos < N);\n\t\treturn\
-    \ dat[pos + sz];\n\t}\n\n\tconst S& operator[](int pos) const noexcept { return\
-    \ dat[pos + sz]; }\n\n\tS fold(int l, int r) const {\n\t\tassert(0 <= l && l <=\
-    \ r && r <= N);\n\t\tif (l == r) return e();\n\t\tS resl = e(), resr = e();\n\t\
-    \tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\t\t\tif (l & 1) resl = op(resl,\
-    \ dat[l++]);\n\t\t\tif (r & 1) resr = op(dat[--r], resr);\n\t\t}\n\t\treturn op(resl,\
-    \ resr);\n\t}\n\n\tS all_fold() const { return dat[1]; }\n\n\ttemplate <typename\
-    \ F>\n\tint max_right(int l, const F& f) const {\n\t\tassert(0 <= l && l <= N);\n\
-    \t\tassert(f(e()));\n\t\tif (l == N) return N;\n\t\tl += sz;\n\t\tS s = e();\n\
-    \t\tdo {\n\t\t\twhile (!(l & 1)) l >>= 1;\n\t\t\tif (!f(op(s, dat[l]))) {\n\t\t\
-    \t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (f(op(s, dat[l]))) s =\
-    \ op(s, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\t}\n\t\t\ts = op(s,\
-    \ dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn N;\n\t}\n\n\ttemplate <typename\
-    \ F>\n\tint min_left(int r, const F &f) const {\n\t\tassert(0 <= r && r <= N);\n\
-    \t\tassert(f(e()));\n\t\tif (r == 0) return 0;\n\t\tr += sz;\n\t\tS s = e();\n\
-    \t\tdo {\n\t\t\t--r;\n\t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(op(dat[r],\
-    \ s))) {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r << 1 | 1;\n\t\t\t\t\tif (f(op(dat[r],\
-    \ s))) s = op(dat[r--], s);\n\t\t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\
-    \t\ts = op(dat[r], s);\n\t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n\
-    };\n"
+    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
+    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing u32 = std::uint32_t;\nusing\
+    \ u64 = std::uint64_t;\nusing usize = std::size_t;\n#line 3 \"cpstl/ds/Segtree.hpp\"\
+    \n\nnamespace cpstd {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n\
+    >\nclass Segtree {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\tstd::vector<S>\
+    \ dat;\n\tusize n, sz;\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1) {\n\t\
+    \t\tidx >>= 1;\n\t\t\tdat[idx] = operation(dat[idx * 2], dat[idx * 2 + 1]);\n\t\
+    \t}\n\t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit Segtree(u32 N) : Segtree(std::vector<S>(N,\
+    \ identity_elem)) {}\n\n\tSegtree(u32 N, const S &x) : Segtree(std::vector<S>(N,\
+    \ x)) {}\n\n\texplicit Segtree(const std::vector<S> &v) : n((u32)v.size()) {\n\
+    \t\tsz = 1;\n\t\twhile (sz < n) sz <<= 1;\n\t\tdat.assign(sz * 2, identity_elem);\n\
+    \t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\t\tfor (usize i = sz -\
+    \ 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);\n\t}\n\n\tvoid\
+    \ set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\t\tidx += sz;\n\t\tdat[idx]\
+    \ = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx, const S &x) {\n\t\tassert(idx\
+    \ < n);\n\t\tidx += sz;\n\t\tdat[idx] += x;\n\t\tpushup(idx);\n\t}\n\n\tS fold(usize\
+    \ l, usize r) const {\n\t\tassert(l <= r && r <= n);\n\t\tS resl = identity_elem,\
+    \ resr = identity_elem;\n\t\tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\
+    \t\t\tif (l & 1) resl = operation(resl, dat[l++]);\n\t\t\tif (r & 1) resr = operation(dat[--r],\
+    \ resr);\n\t\t}\n\t\treturn operation(resl, resr);\n\t}\n\n\tS all_fold() const\
+    \ noexcept { return dat[1]; }\n\n\tS get(usize idx) const {\n\t\tassert(0 <= idx\
+    \ && idx < n);\n\t\treturn dat[idx + sz];\n\t}\n\n\tS operator[](usize idx) const\
+    \ noexcept { return dat[idx + sz]; }\n\n\ttemplate <typename F>\n\tusize max_right(usize\
+    \ l, const F &f) const {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(f(identity_elem));\n\
+    \t\tif (l == n) return n;\n\t\tl += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\
+    \t\t\twhile (!(l & 1)) l >>= 1;\n\t\t\tif (!f(operation(prod, dat[l]))) {\n\t\t\
+    \t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (f(op(prod, dat[l]))) prod\
+    \ = operation(prod, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\t}\n\t\
+    \t\tprod = operation(prod, dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn\
+    \ n;\n\t}\n\n\ttemplate <typename F>\n\tusize min_left(usize r, const F &f) const\
+    \ {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(f(identity_elem));\n\t\tif (r ==\
+    \ 0) return 0;\n\t\tr += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\t\t\t--r;\n\
+    \t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(operation(dat[r], prod)))\
+    \ {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r * 2 + 1;\n\t\t\t\t\tif (f(op(dat[r],\
+    \ prod))) prod = operation(dat[r--], prod);\n\t\t\t\t}\n\t\t\t\treturn r + 1 -\
+    \ sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\t\t} while ((r & -r) !=\
+    \ r);\n\t\treturn 0;\n\t}\n};\n};\n"
   code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\nclass Segtree {\n\tprivate:\n\
-    \tstd::vector<S> dat;\n\tint N, sz;\n\n\tpublic:\n\tSegtree() {}\n\texplicit Segtree(int\
-    \ n) : Segtree(std::vector<S>(n, e())) {}\n\texplicit Segtree(int n, const S &init)\
-    \ : Segtree(std::vector<S>(n, init)) {}\n\texplicit Segtree(const std::vector<S>\
-    \ &v) : N((int)v.size()) {\n\t\tsz = 1;\n\t\twhile (sz < N) sz <<= 1;\n\t\tdat.assign(sz\
-    \ << 1, e());\n\t\tfor (int i = 0; i < N; ++i) dat[i + sz] = v[i];\n\t\tfor (int\
-    \ i = sz - 1; i >= 1; --i) dat[i] = op(dat[i << 1], dat[i << 1 | 1]);\n\t}\n\t\
-    template <class Inputit>\n\tSegtree(Inputit first, Inputit last) : Segtree(std::vector<S>(first,\
-    \ last)) {}\n\n\tvoid set(int pos, const S &x) {\n\t\tassert(0 <= pos && pos <\
-    \ N);\n\t\tpos += sz;\n\t\tdat[pos] = x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>=\
-    \ 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\t\
-    void add(int pos, const S &x) {\n\t\tassert(0 <= pos && pos < N);\n\t\tpos +=\
-    \ sz;\n\t\tdat[pos] += x;\n\t\twhile (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos]\
-    \ = op(dat[pos << 1], dat[pos << 1 | 1]);\n\t\t}\n\t}\n\n\ttemplate <\n\t\ttypename\
-    \ F,\n\t\tauto mapping\n\t>\n\tvoid set(int pos, const F &f) {\n\t\tassert(0 <=\
-    \ pos && pos < N);\n\t\tpos += sz;\n\t\tdat[pos] = mapping(f, dat[pos]);\n\t\t\
-    while (pos > 1) {\n\t\t\tpos >>= 1;\n\t\t\tdat[pos] = op(dat[pos << 1], dat[pos\
-    \ << 1 | 1]);\n\t\t}\n\t}\n\n\tconst S& get(int pos) const {\n\t\tassert(0 <=\
-    \ pos && pos < N);\n\t\treturn dat[pos + sz];\n\t}\n\n\tconst S& operator[](int\
-    \ pos) const noexcept { return dat[pos + sz]; }\n\n\tS fold(int l, int r) const\
-    \ {\n\t\tassert(0 <= l && l <= r && r <= N);\n\t\tif (l == r) return e();\n\t\t\
-    S resl = e(), resr = e();\n\t\tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1)\
-    \ {\n\t\t\tif (l & 1) resl = op(resl, dat[l++]);\n\t\t\tif (r & 1) resr = op(dat[--r],\
-    \ resr);\n\t\t}\n\t\treturn op(resl, resr);\n\t}\n\n\tS all_fold() const { return\
-    \ dat[1]; }\n\n\ttemplate <typename F>\n\tint max_right(int l, const F& f) const\
-    \ {\n\t\tassert(0 <= l && l <= N);\n\t\tassert(f(e()));\n\t\tif (l == N) return\
-    \ N;\n\t\tl += sz;\n\t\tS s = e();\n\t\tdo {\n\t\t\twhile (!(l & 1)) l >>= 1;\n\
-    \t\t\tif (!f(op(s, dat[l]))) {\n\t\t\t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\
-    \t\t\t\t\tif (f(op(s, dat[l]))) s = op(s, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn\
-    \ l - sz;\n\t\t\t}\n\t\t\ts = op(s, dat[l++]);\n\t\t} while ((l & -l) != l);\n\
-    \t\treturn N;\n\t}\n\n\ttemplate <typename F>\n\tint min_left(int r, const F &f)\
-    \ const {\n\t\tassert(0 <= r && r <= N);\n\t\tassert(f(e()));\n\t\tif (r == 0)\
-    \ return 0;\n\t\tr += sz;\n\t\tS s = e();\n\t\tdo {\n\t\t\t--r;\n\t\t\twhile (r\
-    \ > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(op(dat[r], s))) {\n\t\t\t\twhile (r <\
-    \ sz) {\n\t\t\t\t\tr = r << 1 | 1;\n\t\t\t\t\tif (f(op(dat[r], s))) s = op(dat[r--],\
-    \ s);\n\t\t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\t\ts = op(dat[r], s);\n\
-    \t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n};\n"
+    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n>\nclass Segtree\
+    \ {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\tstd::vector<S> dat;\n\
+    \tusize n, sz;\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1) {\n\t\t\tidx\
+    \ >>= 1;\n\t\t\tdat[idx] = operation(dat[idx * 2], dat[idx * 2 + 1]);\n\t\t}\n\
+    \t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit Segtree(u32 N) : Segtree(std::vector<S>(N,\
+    \ identity_elem)) {}\n\n\tSegtree(u32 N, const S &x) : Segtree(std::vector<S>(N,\
+    \ x)) {}\n\n\texplicit Segtree(const std::vector<S> &v) : n((u32)v.size()) {\n\
+    \t\tsz = 1;\n\t\twhile (sz < n) sz <<= 1;\n\t\tdat.assign(sz * 2, identity_elem);\n\
+    \t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\t\tfor (usize i = sz -\
+    \ 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);\n\t}\n\n\tvoid\
+    \ set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\t\tidx += sz;\n\t\tdat[idx]\
+    \ = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx, const S &x) {\n\t\tassert(idx\
+    \ < n);\n\t\tidx += sz;\n\t\tdat[idx] += x;\n\t\tpushup(idx);\n\t}\n\n\tS fold(usize\
+    \ l, usize r) const {\n\t\tassert(l <= r && r <= n);\n\t\tS resl = identity_elem,\
+    \ resr = identity_elem;\n\t\tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\
+    \t\t\tif (l & 1) resl = operation(resl, dat[l++]);\n\t\t\tif (r & 1) resr = operation(dat[--r],\
+    \ resr);\n\t\t}\n\t\treturn operation(resl, resr);\n\t}\n\n\tS all_fold() const\
+    \ noexcept { return dat[1]; }\n\n\tS get(usize idx) const {\n\t\tassert(0 <= idx\
+    \ && idx < n);\n\t\treturn dat[idx + sz];\n\t}\n\n\tS operator[](usize idx) const\
+    \ noexcept { return dat[idx + sz]; }\n\n\ttemplate <typename F>\n\tusize max_right(usize\
+    \ l, const F &f) const {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(f(identity_elem));\n\
+    \t\tif (l == n) return n;\n\t\tl += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\
+    \t\t\twhile (!(l & 1)) l >>= 1;\n\t\t\tif (!f(operation(prod, dat[l]))) {\n\t\t\
+    \t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (f(op(prod, dat[l]))) prod\
+    \ = operation(prod, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\t}\n\t\
+    \t\tprod = operation(prod, dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn\
+    \ n;\n\t}\n\n\ttemplate <typename F>\n\tusize min_left(usize r, const F &f) const\
+    \ {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(f(identity_elem));\n\t\tif (r ==\
+    \ 0) return 0;\n\t\tr += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\t\t\t--r;\n\
+    \t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(operation(dat[r], prod)))\
+    \ {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r * 2 + 1;\n\t\t\t\t\tif (f(op(dat[r],\
+    \ prod))) prod = operation(dat[r--], prod);\n\t\t\t\t}\n\t\t\t\treturn r + 1 -\
+    \ sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\t\t} while ((r & -r) !=\
+    \ r);\n\t\treturn 0;\n\t}\n};\n};\n"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
@@ -228,7 +223,7 @@ data:
   isVerificationFile: false
   path: cpstl/ds/Segtree.hpp
   requiredBy: []
-  timestamp: '2025-09-09 03:12:31+09:00'
+  timestamp: '2025-10-26 22:56:49+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp

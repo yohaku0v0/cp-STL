@@ -116,9 +116,11 @@ data:
     \ T>\nvoid println_ns(H &&tgh, T &&... tgt) {\n\t_print(tgh);\n\tprintln_ns(std::forward<T>(tgt)...);\n\
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
-    using Fastio::flush;\n\n};\n#line 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace\
-    \ cpstd {\n\ntemplate <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\tusing\
-    \ mint = StaticModint;\n\tuint32_t _v = 0;\n\n\tstatic constexpr bool is_prime\
+    using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
+    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing u32 = std::uint32_t;\nusing\
+    \ u64 = std::uint64_t;\nusing usize = std::size_t;\n#line 3 \"cpstl/math/StaticModint.hpp\"\
+    \n\nnamespace cpstd {\n\ntemplate <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\
+    \tusing mint = StaticModint;\n\tuint32_t _v = 0;\n\n\tstatic constexpr bool is_prime\
     \ = []() -> bool {\n\t\tif (m == 1) return false;\n\t\tif (m == 2 || m == 7 ||\
     \ m == 61) return true;\n\t\tif (!(m & 1)) return false;\n\t\tuint32_t d = m -\
     \ 1;\n\t\twhile (!(d & 1)) d >>= 1;\n\t\tfor (uint32_t a : {2, 7, 61}) {\n\t\t\
@@ -214,7 +216,7 @@ data:
   - cpstl/ds/Dsu.hpp
   - cpstl/other/Template.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-09-09 02:59:15+09:00'
+  timestamp: '2025-10-26 22:56:49+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
