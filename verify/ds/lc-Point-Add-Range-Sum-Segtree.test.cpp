@@ -4,14 +4,13 @@
 #include "cpstl/ds/Segtree.hpp"
 
 long long op(long long a, long long b) { return a + b; }
-long long e() { return 0; }
 
 int main() {
 	int N, Q;
 	cpstd::input(N, Q);
 	std::vector<long long> A(N);
 	cpstd::input(A);
-	cpstd::Segtree<long long, op, e> sg(A);
+	cpstd::Segtree<long long, op, 0> sg(A);
 	int t;
 	while (Q--) {
 		cpstd::input(t);
