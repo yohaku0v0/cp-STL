@@ -22,6 +22,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: cpstl/other/Template.hpp
       title: cpstl/other/Template.hpp
+  - name: .
+    pages:
+    - icon: ':warning:'
+      path: expander.py
+      title: expander.py
   verificationCategories:
   - name: verify/ds
     pages:
