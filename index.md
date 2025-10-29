@@ -25,9 +25,6 @@ data:
   - name: .
     pages:
     - icon: ':warning:'
-      path: e.cpp
-      title: e.cpp
-    - icon: ':warning:'
       path: expander.py
       title: expander.py
   verificationCategories:
