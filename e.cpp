@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/unionfind"
+#define PROBLEM "https://judge.yosupo.jp/problem/point_add_range_sum"
 
 #include <bits/stdc++.h>
 
@@ -223,6 +223,7 @@ void input_int(T &x) {
 
 void _input(int &dest) { input_int(dest); }
 void _input(unsigned int &dest) { input_int(dest); }
+void _input(unsigned long &dest) { input_int(dest); }
 void _input(long long &dest) { input_int(dest); }
 void _input(unsigned long long &dest) { input_int(dest); }
 void _input(__int128 &dest) { input_int(dest); }
@@ -308,6 +309,7 @@ void print_real(T tg) {
 
 void _print(int tg) { print_int(tg); }
 void _print(unsigned int tg) { print_int(tg); }
+void _print(unsigned long tg) { print_int(tg); }
 void _print(long long tg) { print_int(tg); }
 void _print(unsigned long long tg) { print_int(tg); }
 void _print(__int128 tg) { print_int(tg); }
@@ -421,82 +423,136 @@ template <
 	auto operation,
 	S identity_elem
 >
-class Dsu {
+class Segtree {
 	public:
 	using value_type = S;
 
 	private:
-	i32 n;
-	std::vector<std::pair<i32, S>> tree;
+	std::vector<S> dat;
+	usize n, sz;
 
-	i32 _leader(i32 x) {
-		return tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);
+	void pushup(usize idx) {
+		while (idx > 1) {
+			idx >>= 1;
+			dat[idx] = operation(dat[idx * 2], dat[idx * 2 + 1]);
+		}
 	}
 
 	public:
-	Dsu() {}
-
-	explicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem}) {}
+	Segtree() {}
 	
-	explicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {
-		tree.resize(n);
-		for (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};
+	explicit Segtree(u32 N) : Segtree(std::vector<S>(N, identity_elem)) {}
+
+	Segtree(u32 N, const S &x) : Segtree(std::vector<S>(N, x)) {}
+
+	explicit Segtree(const std::vector<S> &v) : n((u32)v.size()) {
+		sz = 1;
+		while (sz < n) sz <<= 1;
+		dat.assign(sz * 2, identity_elem);
+		for (usize i = 0; i < n; ++i) dat[sz + i] = v[i];
+		for (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);
 	}
 
-	i32 leader(i32 x) {
-		assert(0 <= x && x < n);
-		return _leader(x);
+	void set(usize idx, const S &x) {
+		assert(idx < n);
+		idx += sz;
+		dat[idx] = x;
+		pushup(idx);
 	}
 
-	bool merge(i32 a, i32 b) {
-		assert(0 <= a && a < n);
-		assert(0 <= b && b < n);
-		a = _leader(a), b = _leader(b);
-		if (a == b) return false;
-		if (tree[a].first > tree[b].first) std::swap(a, b);
-		tree[a].first += tree[b].first;
-		tree[a].second = operation(tree[a].second, tree[b].second);
-		tree[b].first = a;
-		return true;
+	void add(usize idx, const S &x) {
+		assert(idx < n);
+		idx += sz;
+		dat[idx] += x;
+		pushup(idx);
 	}
 
-	bool same(i32 a, i32 b) {
-		assert(0 <= a && a < n);
-		assert(0 <= b && b < n);
-		return _leader(a) == _leader(b);
-	}
-
-	i32 size(i32 x) {
-		assert(0 <= x && x < n);
-		return -tree[_leader(x)].first;
-	}
-
-	S fold(i32 x) {
-		assert(0 <= x && x < n);
-		return tree[_leader(x)].first;
-	}
-
-	std::vector<std::vector<i32>> groups() {
-		std::vector<std::vector<i32>> mem, res;
-		for (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);
-		for (i32 i = 0; i < n; ++i) {
-			if (!mem[i].empty()) res.emplace_back(mem[i]);
+	S fold(usize l, usize r) const {
+		assert(l <= r && r <= n);
+		S resl = identity_elem, resr = identity_elem;
+		for (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {
+			if (l & 1) resl = operation(resl, dat[l++]);
+			if (r & 1) resr = operation(dat[--r], resr);
 		}
-		return res;
+		return operation(resl, resr);
+	}
+
+	S all_fold() const noexcept { return dat[1]; }
+
+	S get(usize idx) const {
+		assert(0 <= idx && idx < n);
+		return dat[idx + sz];
+	}
+
+	S operator[](usize idx) const noexcept { return dat[idx + sz]; }
+
+	template <typename F>
+	usize max_right(usize l, const F &f) const {
+		assert(0 <= l && l <= n);
+		assert(f(identity_elem));
+		if (l == n) return n;
+		l += sz;
+		S prod = identity_elem;
+		do {
+			while (!(l & 1)) l >>= 1;
+			if (!f(operation(prod, dat[l]))) {
+				while (l < sz) {
+					l <<= 1;
+					if (f(op(prod, dat[l]))) prod = operation(prod, dat[l++]);
+				}
+				return l - sz;
+			}
+			prod = operation(prod, dat[l++]);
+		} while ((l & -l) != l);
+		return n;
+	}
+
+	template <typename F>
+	usize min_left(usize r, const F &f) const {
+		assert(0 <= r && r <= n);
+		assert(f(identity_elem));
+		if (r == 0) return 0;
+		r += sz;
+		S prod = identity_elem;
+		do {
+			--r;
+			while (r > 1 && (r & 1)) r >>= 1;
+			if (!f(operation(dat[r], prod))) {
+				while (r < sz) {
+					r = r * 2 + 1;
+					if (f(op(dat[r], prod))) prod = operation(dat[r--], prod);
+				}
+				return r + 1 - sz;
+			}
+			prod = operation(dat[r], prod);
+		} while ((r & -r) != r);
+		return 0;
 	}
 };
 };
 
-i32 op(i32 a, i32 b) { return a; }
+u64 op(u64 a, u64 b) { return a + b; }
 
 int main() {
 	i32 N, Q;
 	cpstd::input(N, Q);
-	cpstd::Dsu<i32, op, 0> dsu(N);
-	i32 t, u, v;
+	std::vector<u64> A(N);
+	cpstd::input(A);
+	cpstd::Segtree<u64, op, 0> sg(A);
+	i32 t;
 	while (Q--) {
-		cpstd::input(t, u, v);
-		if (t == 0) dsu.merge(u, v);
-		else cpstd::println((dsu.same(u, v) ? "1" : "0"));
+		cpstd::input(t);
+		if (t == 0) {
+			i32 p;
+			u64 x;
+			cpstd::input(p, x);
+			sg.add(p, x);
+		}
+		else {
+			i32 l, r;
+			cpstd::input(l, r);
+			cpstd::println(sg.fold(l, r));
+		}
 	}
+	return 0;
 }
