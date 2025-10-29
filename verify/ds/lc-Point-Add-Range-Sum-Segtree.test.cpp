@@ -3,25 +3,25 @@
 #include "cpstl/other/Template.hpp"
 #include "cpstl/ds/Segtree.hpp"
 
-long long op(long long a, long long b) { return a + b; }
+u64 op(u64 a, u64 b) { return a + b; }
 
 int main() {
-	int N, Q;
+	i32 N, Q;
 	cpstd::input(N, Q);
-	std::vector<long long> A(N);
+	std::vector<u64> A(N);
 	cpstd::input(A);
-	cpstd::Segtree<long long, op, 0> sg(A);
-	int t;
+	cpstd::Segtree<u64, op, 0> sg(A);
+	i32 t;
 	while (Q--) {
 		cpstd::input(t);
 		if (t == 0) {
-			int p;
-			long long x;
+			i32 p;
+			u64 x;
 			cpstd::input(p, x);
 			sg.add(p, x);
 		}
 		else {
-			int l, r;
+			i32 l, r;
 			cpstd::input(l, r);
 			cpstd::println(sg.fold(l, r));
 		}

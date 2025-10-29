@@ -3,14 +3,13 @@
 #include "cpstl/other/Template.hpp"
 #include "cpstl/ds/Dsu.hpp"
 
-int op(int a, int b) { return a; }
-int e() { return 0; }
+i32 op(i32 a, i32 b) { return a; }
 
 int main() {
-	int N, Q;
+	i32 N, Q;
 	cpstd::input(N, Q);
-	cpstd::Dsu<int, op, e> dsu(N);
-	int t, u, v;
+	cpstd::Dsu<i32, op, 0> dsu(N);
+	i32 t, u, v;
 	while (Q--) {
 		cpstd::input(t, u, v);
 		if (t == 0) dsu.merge(u, v);

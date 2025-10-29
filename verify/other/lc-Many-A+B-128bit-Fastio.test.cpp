@@ -5,7 +5,7 @@
 int main() {
 	int T;
 	cpstd::input(T);
-	__int128 A, B;
+	i128 A, B;
 	while (T--) {
 		cpstd::input(A, B);
 		cpstd::println(A + B);
