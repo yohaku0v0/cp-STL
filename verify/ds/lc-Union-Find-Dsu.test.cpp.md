@@ -93,40 +93,42 @@ data:
     \twhile (c >= '0') x = x * 10 + (c & 15), c = ibuf[pil++];\n\tif constexpr (std::is_signed<T>::value\
     \ || std::is_same_v<T, __int128_t>) {\n\t\tif (minus) x = -x;\n\t}\n}\n\nvoid\
     \ _input(int &dest) { input_int(dest); }\nvoid _input(unsigned int &dest) { input_int(dest);\
-    \ }\nvoid _input(long long &dest) { input_int(dest); }\nvoid _input(unsigned long\
-    \ long &dest) { input_int(dest); }\nvoid _input(__int128 &dest) { input_int(dest);\
-    \ }\nvoid _input(unsigned __int128 &dest) { input_int(dest); }\n\ntemplate <uint32_t\
-    \ m>\nvoid _input(cpstd::StaticModint<m> &dest) { long long a; _input(a); dest\
-    \ = a; }\n\ntemplate <typename T, typename U>\nvoid _input(std::pair<T, U> &dest)\
-    \ { _input(dest.first), _input(dest.second); }\n\ntemplate <std::size_t N = 0,\
-    \ typename T>\nvoid input_tuple(T &t) {\n\tif constexpr (N < std::tuple_size<T>::value)\
-    \ {\n\t\tauto &x = std::get<N>(t);\n\t\tinput(x);\n\t\tinput_tuple<N + 1>(t);\n\
-    \t}\n}\n\ntemplate <typename... T>\nvoid _input(std::tuple<T...> &dest) { input_tuple(dest);\
-    \ }\n\ntemplate <std::size_t N = 0, typename T>\nvoid _input(std::array<T, N>\
-    \ &dest) { for (auto &e : dest) _input(e); }\n\ntemplate <typename T>\nvoid _input(std::vector<T>\
-    \ &dest) { for (auto &e : dest) _input(e); }\n\nvoid input() {}\n\n// \u5404\u5F15\
-    \u6570\u306B\u5165\u529B\ntemplate <typename H, typename... T>\nvoid input(H &desth,\
-    \ T &... destt) { _input(desth), input(destt...); }\n\nvoid _print(const char\
-    \ tg) {\n\tif (por == BUF_SIZE) flush();\n\tobuf[por++] = tg;\n}\n\nvoid _print(const\
-    \ std::string tg) { for (char c : tg) _print(c); }\n\nvoid _print(const char *tg)\
-    \ {\n\tstd::size_t len = std::strlen(tg);\n\tfor (std::size_t i = 0; i < len;\
-    \ ++i) _print(tg[i]);\n}\n\ntemplate <typename T>\nvoid print_int(T x) {\n\tif\
-    \ (por > BUF_SIZE - 100) flush();\n\tif (x < 0) obuf[por++] = '-', x = -x;\n\t\
-    int outi;\n\tfor (outi = 96; x >= 10000; outi -= 4) {\n\t\tstd::memcpy(out + outi,\
-    \ pre.num[x % 10000], 4);\n\t\tx /= 10000;\n\t}\n\tif (x >= 1000) {\n\t\tstd::memcpy(obuf\
-    \ + por, pre.num[x], 4);\n\t\tpor += 4;\n\t}\n\telse if (x >= 100) {\n\t\tstd::memcpy(obuf\
-    \ + por, pre.num[x] + 1, 3);\n\t\tpor += 3;\n\t}\n\telse if (x >= 10) {\n\t\t\
-    int q = (x * 103) >> 10;\n\t\tobuf[por] = q | '0';\n\t\tobuf[por + 1] = (x - q\
-    \ * 10) | '0';\n\t\tpor += 2;\n\t}\n\telse obuf[por++] = x | '0';\n\tstd::memcpy(obuf\
+    \ }\nvoid _input(unsigned long &dest) { input_int(dest); }\nvoid _input(long long\
+    \ &dest) { input_int(dest); }\nvoid _input(unsigned long long &dest) { input_int(dest);\
+    \ }\nvoid _input(__int128 &dest) { input_int(dest); }\nvoid _input(unsigned __int128\
+    \ &dest) { input_int(dest); }\n\ntemplate <uint32_t m>\nvoid _input(cpstd::StaticModint<m>\
+    \ &dest) { long long a; _input(a); dest = a; }\n\ntemplate <typename T, typename\
+    \ U>\nvoid _input(std::pair<T, U> &dest) { _input(dest.first), _input(dest.second);\
+    \ }\n\ntemplate <std::size_t N = 0, typename T>\nvoid input_tuple(T &t) {\n\t\
+    if constexpr (N < std::tuple_size<T>::value) {\n\t\tauto &x = std::get<N>(t);\n\
+    \t\tinput(x);\n\t\tinput_tuple<N + 1>(t);\n\t}\n}\n\ntemplate <typename... T>\n\
+    void _input(std::tuple<T...> &dest) { input_tuple(dest); }\n\ntemplate <std::size_t\
+    \ N = 0, typename T>\nvoid _input(std::array<T, N> &dest) { for (auto &e : dest)\
+    \ _input(e); }\n\ntemplate <typename T>\nvoid _input(std::vector<T> &dest) { for\
+    \ (auto &e : dest) _input(e); }\n\nvoid input() {}\n\n// \u5404\u5F15\u6570\u306B\
+    \u5165\u529B\ntemplate <typename H, typename... T>\nvoid input(H &desth, T &...\
+    \ destt) { _input(desth), input(destt...); }\n\nvoid _print(const char tg) {\n\
+    \tif (por == BUF_SIZE) flush();\n\tobuf[por++] = tg;\n}\n\nvoid _print(const std::string\
+    \ tg) { for (char c : tg) _print(c); }\n\nvoid _print(const char *tg) {\n\tstd::size_t\
+    \ len = std::strlen(tg);\n\tfor (std::size_t i = 0; i < len; ++i) _print(tg[i]);\n\
+    }\n\ntemplate <typename T>\nvoid print_int(T x) {\n\tif (por > BUF_SIZE - 100)\
+    \ flush();\n\tif (x < 0) obuf[por++] = '-', x = -x;\n\tint outi;\n\tfor (outi\
+    \ = 96; x >= 10000; outi -= 4) {\n\t\tstd::memcpy(out + outi, pre.num[x % 10000],\
+    \ 4);\n\t\tx /= 10000;\n\t}\n\tif (x >= 1000) {\n\t\tstd::memcpy(obuf + por, pre.num[x],\
+    \ 4);\n\t\tpor += 4;\n\t}\n\telse if (x >= 100) {\n\t\tstd::memcpy(obuf + por,\
+    \ pre.num[x] + 1, 3);\n\t\tpor += 3;\n\t}\n\telse if (x >= 10) {\n\t\tint q =\
+    \ (x * 103) >> 10;\n\t\tobuf[por] = q | '0';\n\t\tobuf[por + 1] = (x - q * 10)\
+    \ | '0';\n\t\tpor += 2;\n\t}\n\telse obuf[por++] = x | '0';\n\tstd::memcpy(obuf\
     \ + por, out + outi + 4, 96 - outi);\n\tpor += 96 - outi;\n}\n\ntemplate <typename\
     \ T>\nvoid print_real(T tg) {\n\tstd::ostringstream oss;\n\toss << std::fixed\
     \ << std::setprecision(15) << double(tg);\n\tstd::string s = oss.str();\n\t_print(s);\n\
     }\n\nvoid _print(int tg) { print_int(tg); }\nvoid _print(unsigned int tg) { print_int(tg);\
-    \ }\nvoid _print(long long tg) { print_int(tg); }\nvoid _print(unsigned long long\
-    \ tg) { print_int(tg); }\nvoid _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned\
-    \ __int128 tg) { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\n\
-    void _print(double tg) { print_real(tg); }\nvoid _print(long double tg) { print_real(tg);\
-    \ }\n\ntemplate <uint32_t m>\nvoid _print(cpstd::StaticModint<m> tg) { print_int(tg.val());\
+    \ }\nvoid _print(unsigned long tg) { print_int(tg); }\nvoid _print(long long tg)\
+    \ { print_int(tg); }\nvoid _print(unsigned long long tg) { print_int(tg); }\n\
+    void _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned __int128 tg)\
+    \ { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\nvoid _print(double\
+    \ tg) { print_real(tg); }\nvoid _print(long double tg) { print_real(tg); }\n\n\
+    template <uint32_t m>\nvoid _print(cpstd::StaticModint<m> tg) { print_int(tg.val());\
     \ }\n\ntemplate <typename T, typename U>\nvoid _print(const std::pair<T, U> tg)\
     \ {\n\t_print(tg.first);\n\t_print(' ');\n\t_print(tg.second);\n}\n\ntemplate\
     \ <std::size_t N = 0, typename T>\nvoid print_tuple(const T tg) {\n\tif constexpr\
@@ -150,37 +152,39 @@ data:
     }\n\nvoid __attribute__((destructor)) _d() { flush(); }\n\n};\n\nusing Fastio::input;\n\
     using Fastio::print;\nusing Fastio::println;\nusing Fastio::print_ns;\nusing Fastio::println_ns;\n\
     using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
-    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing u32 = std::uint32_t;\nusing\
-    \ u64 = std::uint64_t;\nusing usize = std::size_t;\n#line 3 \"cpstl/ds/Dsu.hpp\"\
-    \n\nnamespace cpstd {\n\ntemplate <\n\ttypename S,\n\tauto op,\n\tauto e\n>\n\
-    class Dsu {\n\tprivate:\n\tint _n;\n\tstd::vector<std::pair<int, S>> tree;\n\n\
-    \tint _leader(int x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
-    \t}\n\n\tpublic:\n\tDsu() {}\n\texplicit Dsu(int n) : _n(n), tree(n, {-1, e()})\
-    \ {}\n\tDsu(const std::vector<S> &v) : _n(int(v.size())) {\n\t\ttree.resize(_n);\n\
-    \t\tfor (int i = 0; i < _n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\tint leader(int\
-    \ x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(int\
-    \ a, int b) {\n\t\tassert(0 <= a && a < _n);\n\t\tassert(0 <= b && b < _n);\n\t\
-    \ta = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
-    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
-    tree[a].second = op(tree[a].second, tree[b].second);\n\t\ttree[b].first = a;\n\
-    \t\treturn true;\n\t}\n\n\tbool same(int a, int b) {\n\t\tassert(0 <= a && a <\
-    \ _n);\n\t\tassert(0 <= b && b < _n);\n\t\treturn _leader(a) == _leader(b);\n\t\
-    }\n\n\tint size(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn -tree[_leader(x)].first;\n\
-    \t}\n\n\tconst S fold(int x) {\n\t\tassert(0 <= x && x < _n);\n\t\treturn tree[_leader(x)].first;\n\
-    \t}\n\n\tstd::vector<std::vector<int>> groups() {\n\t\tstd::vector<std::vector<int>>\
-    \ mem, res;\n\t\tfor (int i = 0; i < _n; ++i) mem[_leader(i)].push_back(i);\n\t\
-    \tfor (int i = 0; i < _n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n#line 5 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\
-    \n\nint op(int a, int b) { return a; }\nint e() { return 0; }\n\nint main() {\n\
-    \tint N, Q;\n\tcpstd::input(N, Q);\n\tcpstd::Dsu<int, op, e> dsu(N);\n\tint t,\
-    \ u, v;\n\twhile (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u,\
-    \ v);\n\t\telse cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
+    \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
+    \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
+    using usize = std::size_t;\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\
+    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n>\nclass Dsu\
+    \ {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32,\
+    \ S>> tree;\n\n\ti32 _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first\
+    \ = _leader(tree[x].first);\n\t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32\
+    \ N) : n(N), tree(N, {-1, identity_elem}) {}\n\t\n\texplicit Dsu(const std::vector<S>\
+    \ &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\t\tfor (i32 i = 0; i < n; ++i)\
+    \ tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32 x) {\n\t\tassert(0 <= x && x\
+    \ < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32 a, i32 b) {\n\t\tassert(0\
+    \ <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\ta = _leader(a), b = _leader(b);\n\
+    \t\tif (a == b) return false;\n\t\tif (tree[a].first > tree[b].first) std::swap(a,\
+    \ b);\n\t\ttree[a].first += tree[b].first;\n\t\ttree[a].second = operation(tree[a].second,\
+    \ tree[b].second);\n\t\ttree[b].first = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32\
+    \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
+    return _leader(a) == _leader(b);\n\t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <=\
+    \ x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\t}\n\n\tS fold(i32 x) {\n\
+    \t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\t}\n\n\tstd::vector<std::vector<i32>>\
+    \ groups() {\n\t\tstd::vector<std::vector<i32>> mem, res;\n\t\tfor (i32 i = 0;\
+    \ i < n; ++i) mem[_leader(i)].push_back(i);\n\t\tfor (i32 i = 0; i < n; ++i) {\n\
+    \t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\t\t}\n\t\treturn res;\n\
+    \t}\n};\n};\n#line 5 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\n\ni32 op(i32 a,\
+    \ i32 b) { return a; }\n\nint main() {\n\ti32 N, Q;\n\tcpstd::input(N, Q);\n\t\
+    cpstd::Dsu<i32, op, 0> dsu(N);\n\ti32 t, u, v;\n\twhile (Q--) {\n\t\tcpstd::input(t,\
+    \ u, v);\n\t\tif (t == 0) dsu.merge(u, v);\n\t\telse cpstd::println((dsu.same(u,\
+    \ v) ? \"1\" : \"0\"));\n\t}\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind\"\n\n#include\
-    \ \"cpstl/other/Template.hpp\"\n#include \"cpstl/ds/Dsu.hpp\"\n\nint op(int a,\
-    \ int b) { return a; }\nint e() { return 0; }\n\nint main() {\n\tint N, Q;\n\t\
-    cpstd::input(N, Q);\n\tcpstd::Dsu<int, op, e> dsu(N);\n\tint t, u, v;\n\twhile\
-    \ (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u, v);\n\t\t\
-    else cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
+    \ \"cpstl/other/Template.hpp\"\n#include \"cpstl/ds/Dsu.hpp\"\n\ni32 op(i32 a,\
+    \ i32 b) { return a; }\n\nint main() {\n\ti32 N, Q;\n\tcpstd::input(N, Q);\n\t\
+    cpstd::Dsu<i32, op, 0> dsu(N);\n\ti32 t, u, v;\n\twhile (Q--) {\n\t\tcpstd::input(t,\
+    \ u, v);\n\t\tif (t == 0) dsu.merge(u, v);\n\t\telse cpstd::println((dsu.same(u,\
+    \ v) ? \"1\" : \"0\"));\n\t}\n}\n"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
@@ -189,7 +193,7 @@ data:
   isVerificationFile: true
   path: verify/ds/lc-Union-Find-Dsu.test.cpp
   requiredBy: []
-  timestamp: '2025-10-26 22:56:49+09:00'
+  timestamp: '2025-10-29 21:53:31+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/ds/lc-Union-Find-Dsu.test.cpp
