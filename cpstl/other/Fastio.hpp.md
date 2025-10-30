@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy:
@@ -14,17 +14,17 @@ data:
   - icon: ':heavy_check_mark:'
     path: cpstl/ds/LazySegtree.hpp
     title: cpstl/ds/LazySegtree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
     title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - icon: ':heavy_check_mark:'
@@ -36,9 +36,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -267,7 +267,7 @@ data:
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Template.hpp
   timestamp: '2025-10-30 19:11:20+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp

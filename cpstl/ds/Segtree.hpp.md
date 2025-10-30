@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
     title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -157,7 +157,7 @@ data:
     \ Segtree(u32 N) : Segtree(std::vector<S>(N, identity_elem())) {}\n\n\tSegtree(u32\
     \ N, const S &x) : Segtree(std::vector<S>(N, x)) {}\n\n\texplicit Segtree(const\
     \ std::vector<S> &v) : n((u32)v.size()) {\n\t\tsz = std::bit_ceil(n);\n\t\tdat.assign(sz\
-    \ * 2, identity_elem);\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
+    \ * 2, identity_elem());\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
     \t\tfor (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i *\
     \ 2 + 1]);\n\t}\n\n\tvoid set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\
     \t\tidx += sz;\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx,\
@@ -192,7 +192,7 @@ data:
     \ Segtree(u32 N) : Segtree(std::vector<S>(N, identity_elem())) {}\n\n\tSegtree(u32\
     \ N, const S &x) : Segtree(std::vector<S>(N, x)) {}\n\n\texplicit Segtree(const\
     \ std::vector<S> &v) : n((u32)v.size()) {\n\t\tsz = std::bit_ceil(n);\n\t\tdat.assign(sz\
-    \ * 2, identity_elem);\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
+    \ * 2, identity_elem());\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
     \t\tfor (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i *\
     \ 2 + 1]);\n\t}\n\n\tvoid set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\
     \t\tidx += sz;\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx,\
@@ -226,8 +226,8 @@ data:
   isVerificationFile: false
   path: cpstl/ds/Segtree.hpp
   requiredBy: []
-  timestamp: '2025-10-30 19:11:20+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2025-10-30 19:15:17+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
 documentation_of: cpstl/ds/Segtree.hpp
