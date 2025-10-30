@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
@@ -118,7 +118,7 @@ data:
     \ T>\nvoid print_real(T tg) {\n\tstd::ostringstream oss;\n\toss << std::fixed\
     \ << std::setprecision(15) << double(tg);\n\tstd::string s = oss.str();\n\t_print(s);\n\
     }\n\nvoid _print(int tg) { print_int(tg); }\nvoid _print(unsigned int tg) { print_int(tg);\
-    \ }\nvoid _print(unsigned long tg) { print_int(tg); }\nvoid _print(long long tg)\
+    \ }\nvoid _print(unsigned long tg) { print_int(tg);}\nvoid _print(long long tg)\
     \ { print_int(tg); }\nvoid _print(unsigned long long tg) { print_int(tg); }\n\
     void _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned __int128 tg)\
     \ { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\nvoid _print(double\
@@ -150,47 +150,45 @@ data:
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
     using usize = std::size_t;\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n>\nclass Dsu\
-    \ {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32,\
-    \ S>> tree;\n\n\ti32 _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first\
-    \ = _leader(tree[x].first);\n\t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32\
-    \ N) : n(N), tree(N, {-1, identity_elem}) {}\n\t\n\texplicit Dsu(const std::vector<S>\
-    \ &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\t\tfor (i32 i = 0; i < n; ++i)\
-    \ tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32 x) {\n\t\tassert(0 <= x && x\
-    \ < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32 a, i32 b) {\n\t\tassert(0\
-    \ <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\ta = _leader(a), b = _leader(b);\n\
-    \t\tif (a == b) return false;\n\t\tif (tree[a].first > tree[b].first) std::swap(a,\
-    \ b);\n\t\ttree[a].first += tree[b].first;\n\t\ttree[a].second = operation(tree[a].second,\
-    \ tree[b].second);\n\t\ttree[b].first = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32\
+    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass\
+    \ Dsu {\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32, S>> tree;\n\n\ti32\
+    \ _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
+    \t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()})\
+    \ {}\n\t\n\texplicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\
+    \t\tfor (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32\
+    \ x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32\
     \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
-    return _leader(a) == _leader(b);\n\t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <=\
-    \ x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\t}\n\n\tS fold(i32 x) {\n\
-    \t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\t}\n\n\tstd::vector<std::vector<i32>>\
-    \ groups() {\n\t\tstd::vector<std::vector<i32>> mem, res;\n\t\tfor (i32 i = 0;\
-    \ i < n; ++i) mem[_leader(i)].push_back(i);\n\t\tfor (i32 i = 0; i < n; ++i) {\n\
-    \t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\t\t}\n\t\treturn res;\n\
-    \t}\n};\n};\n"
+    a = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
+    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
+    tree[a].second = operation(tree[a].second, tree[b].second);\n\t\ttree[b].first\
+    \ = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32 a, i32 b) {\n\t\tassert(0 <=\
+    \ a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\treturn _leader(a) == _leader(b);\n\
+    \t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\
+    \t}\n\n\tS fold(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\
+    \t}\n\n\tstd::vector<std::vector<i32>> groups() {\n\t\tstd::vector<std::vector<i32>>\
+    \ mem, res;\n\t\tfor (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);\n\t\
+    \tfor (i32 i = 0; i < n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
+    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
   code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n>\nclass Dsu\
-    \ {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32,\
-    \ S>> tree;\n\n\ti32 _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first\
-    \ = _leader(tree[x].first);\n\t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32\
-    \ N) : n(N), tree(N, {-1, identity_elem}) {}\n\t\n\texplicit Dsu(const std::vector<S>\
-    \ &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\t\tfor (i32 i = 0; i < n; ++i)\
-    \ tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32 x) {\n\t\tassert(0 <= x && x\
-    \ < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32 a, i32 b) {\n\t\tassert(0\
-    \ <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\ta = _leader(a), b = _leader(b);\n\
-    \t\tif (a == b) return false;\n\t\tif (tree[a].first > tree[b].first) std::swap(a,\
-    \ b);\n\t\ttree[a].first += tree[b].first;\n\t\ttree[a].second = operation(tree[a].second,\
-    \ tree[b].second);\n\t\ttree[b].first = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32\
+    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass\
+    \ Dsu {\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32, S>> tree;\n\n\ti32\
+    \ _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
+    \t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()})\
+    \ {}\n\t\n\texplicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\
+    \t\tfor (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32\
+    \ x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32\
     \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
-    return _leader(a) == _leader(b);\n\t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <=\
-    \ x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\t}\n\n\tS fold(i32 x) {\n\
-    \t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\t}\n\n\tstd::vector<std::vector<i32>>\
-    \ groups() {\n\t\tstd::vector<std::vector<i32>> mem, res;\n\t\tfor (i32 i = 0;\
-    \ i < n; ++i) mem[_leader(i)].push_back(i);\n\t\tfor (i32 i = 0; i < n; ++i) {\n\
-    \t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\t\t}\n\t\treturn res;\n\
-    \t}\n};\n};\n"
+    a = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
+    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
+    tree[a].second = operation(tree[a].second, tree[b].second);\n\t\ttree[b].first\
+    \ = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32 a, i32 b) {\n\t\tassert(0 <=\
+    \ a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\treturn _leader(a) == _leader(b);\n\
+    \t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\
+    \t}\n\n\tS fold(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\
+    \t}\n\n\tstd::vector<std::vector<i32>> groups() {\n\t\tstd::vector<std::vector<i32>>\
+    \ mem, res;\n\t\tfor (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);\n\t\
+    \tfor (i32 i = 0; i < n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
+    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
@@ -198,7 +196,7 @@ data:
   isVerificationFile: false
   path: cpstl/ds/Dsu.hpp
   requiredBy: []
-  timestamp: '2025-10-29 21:53:31+09:00'
+  timestamp: '2025-10-30 19:11:20+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Union-Find-Dsu.test.cpp

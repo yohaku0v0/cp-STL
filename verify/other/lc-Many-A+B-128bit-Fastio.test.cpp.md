@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
@@ -120,7 +120,7 @@ data:
     \ T>\nvoid print_real(T tg) {\n\tstd::ostringstream oss;\n\toss << std::fixed\
     \ << std::setprecision(15) << double(tg);\n\tstd::string s = oss.str();\n\t_print(s);\n\
     }\n\nvoid _print(int tg) { print_int(tg); }\nvoid _print(unsigned int tg) { print_int(tg);\
-    \ }\nvoid _print(unsigned long tg) { print_int(tg); }\nvoid _print(long long tg)\
+    \ }\nvoid _print(unsigned long tg) { print_int(tg);}\nvoid _print(long long tg)\
     \ { print_int(tg); }\nvoid _print(unsigned long long tg) { print_int(tg); }\n\
     void _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned __int128 tg)\
     \ { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\nvoid _print(double\
@@ -165,7 +165,7 @@ data:
   isVerificationFile: true
   path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
   requiredBy: []
-  timestamp: '2025-10-29 21:53:31+09:00'
+  timestamp: '2025-10-30 19:11:20+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp

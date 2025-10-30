@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy:
@@ -12,27 +12,33 @@ data:
     path: cpstl/ds/Dsu.hpp
     title: cpstl/ds/Dsu.hpp
   - icon: ':heavy_check_mark:'
+    path: cpstl/ds/LazySegtree.hpp
+    title: cpstl/ds/LazySegtree.hpp
+  - icon: ':x:'
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
     title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/ds/lc-Range-Affine-Range-sum.test.cpp
+    title: verify/ds/lc-Range-Affine-Range-sum.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Union-Find-Dsu.test.cpp
     title: verify/ds/lc-Union-Find-Dsu.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -90,7 +96,7 @@ data:
     \ T>\nvoid print_real(T tg) {\n\tstd::ostringstream oss;\n\toss << std::fixed\
     \ << std::setprecision(15) << double(tg);\n\tstd::string s = oss.str();\n\t_print(s);\n\
     }\n\nvoid _print(int tg) { print_int(tg); }\nvoid _print(unsigned int tg) { print_int(tg);\
-    \ }\nvoid _print(unsigned long tg) { print_int(tg); }\nvoid _print(long long tg)\
+    \ }\nvoid _print(unsigned long tg) { print_int(tg);}\nvoid _print(long long tg)\
     \ { print_int(tg); }\nvoid _print(unsigned long long tg) { print_int(tg); }\n\
     void _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned __int128 tg)\
     \ { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\nvoid _print(double\
@@ -215,14 +221,16 @@ data:
   isVerificationFile: false
   path: cpstl/math/StaticModint.hpp
   requiredBy:
+  - cpstl/ds/LazySegtree.hpp
   - cpstl/ds/Segtree.hpp
   - cpstl/ds/Dsu.hpp
   - cpstl/other/Template.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-10-29 21:53:31+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-10-30 19:11:20+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
+  - verify/ds/lc-Range-Affine-Range-sum.test.cpp
   - verify/ds/lc-Union-Find-Dsu.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/math/StaticModint.hpp

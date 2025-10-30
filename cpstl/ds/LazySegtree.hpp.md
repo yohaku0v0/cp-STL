@@ -7,38 +7,17 @@ data:
   - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: cpstl/ds/Dsu.hpp
-    title: cpstl/ds/Dsu.hpp
-  - icon: ':heavy_check_mark:'
-    path: cpstl/ds/LazySegtree.hpp
-    title: cpstl/ds/LazySegtree.hpp
-  - icon: ':x:'
-    path: cpstl/ds/Segtree.hpp
-    title: cpstl/ds/Segtree.hpp
   - icon: ':question:'
-    path: cpstl/math/StaticModint.hpp
-    title: cpstl/math/StaticModint.hpp
-  - icon: ':question:'
-    path: cpstl/other/Fastio.hpp
-    title: cpstl/other/Fastio.hpp
+    path: cpstl/other/Template.hpp
+    title: cpstl/other/Template.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
-    path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-    title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Range-Affine-Range-sum.test.cpp
     title: verify/ds/lc-Range-Affine-Range-sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/ds/lc-Union-Find-Dsu.test.cpp
-    title: verify/ds/lc-Union-Find-Dsu.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-    title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -170,51 +149,147 @@ data:
     using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
-    using usize = std::size_t;\n"
-  code: '#pragma once
-
-    #include <bits/stdc++.h>
-
-    #include "cpstl/math/StaticModint.hpp"
-
-    #include "cpstl/other/Fastio.hpp"
-
-
-    using i32 = std::int32_t;
-
-    using i64 = std::int64_t;
-
-    using i128 = __int128_t;
-
-    using u32 = std::uint32_t;
-
-    using u64 = std::uint64_t;
-
-    using u128 = unsigned __int128_t;
-
-    using usize = std::size_t;'
+    using usize = std::size_t;\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace\
+    \ cpstd {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\
+    \ttypename F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\n\
+    class LazySegtree {\n\tprivate:\n\tstd::vector<S> dat;\n\tstd::vector<F> lazy;\n\
+    \tusize n, sz, log;\n\n\tvoid propagate(usize idx, const F &f) {\n\t\tdat[idx]\
+    \ = mapping(f, dat[idx]);\n\t\tif (idx < sz) lazy[idx] = composition(f, lazy[idx]);\n\
+    \t}\n\n\tvoid pushdown(usize idx) {\n\t\tif (lazy[idx] == identity_map()) return;\n\
+    \t\tpropagate(idx * 2, lazy[idx]);\n\t\tpropagate(idx * 2 + 1, lazy[idx]);\n\t\
+    \tlazy[idx] = identity_map();\n\t}\n\n\tvoid merge(usize idx) { dat[idx] = operation(dat[idx\
+    \ * 2], dat[idx * 2 + 1]); }\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1)\
+    \ {\n\t\t\tidx >>= 1;\n\t\t\tmerge(idx);\n\t\t}\n\t}\n\n\tpublic:\n\tLazySegtree()\
+    \ {}\n\n\texplicit LazySegtree(usize N) : LazySegtree(std::vector<S>(N, identity_elem()))\
+    \ {}\n\n\tLazySegtree(usize N, const S &x) : LazySegtree(std::vector<S>(N, x))\
+    \ {}\n\n\texplicit LazySegtree(const std::vector<S> &v) : n(v.size()) {\n\t\t\
+    sz = std::bit_ceil(n);\n\t\tlog = std::bit_width(sz - 1);\n\t\tdat.assign(sz *\
+    \ 2, identity_elem());\n\t\tlazy.assign(sz * 2, identity_map());\n\t\tfor (usize\
+    \ i = 0; i < n; ++i) dat[i + sz] = v[i];\n\t\tfor (usize i = sz - 1; i >= 1; --i)\
+    \ dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);\n\t}\n\n\tvoid set(usize idx,\
+    \ const S &x) {\n\t\tassert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize\
+    \ i = log; i >= 1; --i) pushdown(idx >> i);\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\
+    \t}\n\n\tvoid add(usize idx, const S &x) {\n\t\tassert(0 <= idx && idx < n);\n\
+    \t\tidx += sz;\n\t\tfor (usize i = log; i >= 1; --i) pushdown(idx >> i);\n\t\t\
+    dat[idx] += x;\n\t\tpushup(idx);\n\t}\n\n\tvoid apply(usize idx, const F &f) {\n\
+    \t\tassert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize i = log; i >=\
+    \ 1; --i) pushdown(idx >> i);\n\t\tdat[idx] = mapping(f, dat[idx]);\n\t\tpushup(idx);\n\
+    \t}\n\n\tvoid apply(usize l, usize r, const F &f) {\n\t\tassert(0 <= l && l <=\
+    \ r && r <= n);\n\t\tif (l == r) return;\n\t\tl += sz, r += sz;\n\t\tfor (usize\
+    \ i = log; i >= 1; --i) {\n\t\t\tif (((l >> i) << i) != l) pushdown(l >> i);\n\
+    \t\t\tif (((r >> i) << i) != r) pushdown((r - 1) >> i);\n\t\t}\n\t\tfor (usize\
+    \ l2 = l, r2 = r; l2 < r2; l2 >>= 1, r2 >>= 1) {\n\t\t\tif (l2 & 1) propagate(l2++,\
+    \ f);\n\t\t\tif (r2 & 1) propagate(--r2, f);\n\t\t}\n\t\tfor (usize i = 1; i <=\
+    \ log; ++i) {\n\t\t\tif (((l >> i) << i) != l) merge(l >> i);\n\t\t\tif (((r >>\
+    \ i) << i) != r) merge((r - 1) >> i);\n\t\t}\n\t}\n\n\tS get(usize idx) {\n\t\t\
+    assert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize i = log; i >= 1;\
+    \ --i) pushdown(idx >> i);\n\t\treturn dat[idx];\n\t}\n\n\tS operator[](usize\
+    \ idx) noexcept {\n\t\tidx += sz;\n\t\tfor (usize i = log; i >= 1; --i) pushdown(idx\
+    \ >> i);\n\t\treturn dat[idx];\n\t}\n\n\tS fold(usize l, usize r) {\n\t\tassert(0\
+    \ <= l && l <= r && r <= n);\n\t\tif (l == r) return identity_elem();\n\t\tl +=\
+    \ sz, r += sz;\n\t\tfor (usize i = log; i >= 1; --i) {\n\t\t\tif (((l >> i) <<\
+    \ i) != l) pushdown(l >> i);\n\t\t\tif (((r >> i) << i) != r) pushdown((r - 1)\
+    \ >> i);\n\t\t}\n\t\tS resl = identity_elem(), resr = identity_elem();\n\t\tfor\
+    \ (; l < r; l >>= 1, r >>= 1) {\n\t\t\tif (l & 1) resl = operation(resl, dat[l++]);\n\
+    \t\t\tif (r & 1) resr = operation(dat[--r], resr);\n\t\t}\n\t\treturn operation(resl,\
+    \ resr);\n\t}\n\n\tS all_fold() const { return dat[1]; }\n\n\ttemplate <auto g>\n\
+    \tusize max_right(usize l) {\n\t\treturn max_right(l, [](const S &x) -> bool {\
+    \ return g(x); });\n\t}\n\n\ttemplate <typename G>\n\tusize max_right(usize l,\
+    \ const G &g) {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(g(identity_elem()));\n\
+    \t\tif (l == n) return n;\n\t\tl += sz;\n\t\tfor (usize i = log; i >= 1; --i)\
+    \ pushdown(l >> i);\n\t\tS prod = identity_elem();\n\t\tdo {\n\t\t\twhile (!(l\
+    \ & 1)) l >>= 1;\n\t\t\tif (!g(operation(prod, dat[l]))) {\n\t\t\t\twhile (l <\
+    \ sz) {\n\t\t\t\t\tpushdown(l);\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (g(operation(prod,\
+    \ dat[l]))) prod = op(prod, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\
+    \t}\n\t\t\tprod = op(prod, dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn\
+    \ n;\n\t}\n\n\ttemplate <auto g>\n\tusize min_left(usize r) {\n\t\treturn min_left(r,\
+    \ [](const S &x) -> bool { return g(x); });\n\t}\n\n\ttemplate <typename G>\n\t\
+    usize min_left(usize r, const G& g) {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(g(identity_elem()));\n\
+    \t\tif (r == 0) return 0;\n\t\tr += sz;\n\t\tfor (usize i = log; i >= 1; --i)\
+    \ pushdown((r - 1) >> i);\n\t\tS prod = identity_elem();\n\t\tdo {\n\t\t\t--r;\n\
+    \t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!g(operation(dat[r], prod)))\
+    \ {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tpushdown(r);\n\t\t\t\t\tr = r * 2 + 1;\n\
+    \t\t\t\t\tif (g(operation(dat[r], prod))) prod = operation(dat[r--], prod);\n\t\
+    \t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\
+    \t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n};\n"
+  code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
+    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\ttypename\
+    \ F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\nclass LazySegtree\
+    \ {\n\tprivate:\n\tstd::vector<S> dat;\n\tstd::vector<F> lazy;\n\tusize n, sz,\
+    \ log;\n\n\tvoid propagate(usize idx, const F &f) {\n\t\tdat[idx] = mapping(f,\
+    \ dat[idx]);\n\t\tif (idx < sz) lazy[idx] = composition(f, lazy[idx]);\n\t}\n\n\
+    \tvoid pushdown(usize idx) {\n\t\tif (lazy[idx] == identity_map()) return;\n\t\
+    \tpropagate(idx * 2, lazy[idx]);\n\t\tpropagate(idx * 2 + 1, lazy[idx]);\n\t\t\
+    lazy[idx] = identity_map();\n\t}\n\n\tvoid merge(usize idx) { dat[idx] = operation(dat[idx\
+    \ * 2], dat[idx * 2 + 1]); }\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1)\
+    \ {\n\t\t\tidx >>= 1;\n\t\t\tmerge(idx);\n\t\t}\n\t}\n\n\tpublic:\n\tLazySegtree()\
+    \ {}\n\n\texplicit LazySegtree(usize N) : LazySegtree(std::vector<S>(N, identity_elem()))\
+    \ {}\n\n\tLazySegtree(usize N, const S &x) : LazySegtree(std::vector<S>(N, x))\
+    \ {}\n\n\texplicit LazySegtree(const std::vector<S> &v) : n(v.size()) {\n\t\t\
+    sz = std::bit_ceil(n);\n\t\tlog = std::bit_width(sz - 1);\n\t\tdat.assign(sz *\
+    \ 2, identity_elem());\n\t\tlazy.assign(sz * 2, identity_map());\n\t\tfor (usize\
+    \ i = 0; i < n; ++i) dat[i + sz] = v[i];\n\t\tfor (usize i = sz - 1; i >= 1; --i)\
+    \ dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);\n\t}\n\n\tvoid set(usize idx,\
+    \ const S &x) {\n\t\tassert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize\
+    \ i = log; i >= 1; --i) pushdown(idx >> i);\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\
+    \t}\n\n\tvoid add(usize idx, const S &x) {\n\t\tassert(0 <= idx && idx < n);\n\
+    \t\tidx += sz;\n\t\tfor (usize i = log; i >= 1; --i) pushdown(idx >> i);\n\t\t\
+    dat[idx] += x;\n\t\tpushup(idx);\n\t}\n\n\tvoid apply(usize idx, const F &f) {\n\
+    \t\tassert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize i = log; i >=\
+    \ 1; --i) pushdown(idx >> i);\n\t\tdat[idx] = mapping(f, dat[idx]);\n\t\tpushup(idx);\n\
+    \t}\n\n\tvoid apply(usize l, usize r, const F &f) {\n\t\tassert(0 <= l && l <=\
+    \ r && r <= n);\n\t\tif (l == r) return;\n\t\tl += sz, r += sz;\n\t\tfor (usize\
+    \ i = log; i >= 1; --i) {\n\t\t\tif (((l >> i) << i) != l) pushdown(l >> i);\n\
+    \t\t\tif (((r >> i) << i) != r) pushdown((r - 1) >> i);\n\t\t}\n\t\tfor (usize\
+    \ l2 = l, r2 = r; l2 < r2; l2 >>= 1, r2 >>= 1) {\n\t\t\tif (l2 & 1) propagate(l2++,\
+    \ f);\n\t\t\tif (r2 & 1) propagate(--r2, f);\n\t\t}\n\t\tfor (usize i = 1; i <=\
+    \ log; ++i) {\n\t\t\tif (((l >> i) << i) != l) merge(l >> i);\n\t\t\tif (((r >>\
+    \ i) << i) != r) merge((r - 1) >> i);\n\t\t}\n\t}\n\n\tS get(usize idx) {\n\t\t\
+    assert(0 <= idx && idx < n);\n\t\tidx += sz;\n\t\tfor (usize i = log; i >= 1;\
+    \ --i) pushdown(idx >> i);\n\t\treturn dat[idx];\n\t}\n\n\tS operator[](usize\
+    \ idx) noexcept {\n\t\tidx += sz;\n\t\tfor (usize i = log; i >= 1; --i) pushdown(idx\
+    \ >> i);\n\t\treturn dat[idx];\n\t}\n\n\tS fold(usize l, usize r) {\n\t\tassert(0\
+    \ <= l && l <= r && r <= n);\n\t\tif (l == r) return identity_elem();\n\t\tl +=\
+    \ sz, r += sz;\n\t\tfor (usize i = log; i >= 1; --i) {\n\t\t\tif (((l >> i) <<\
+    \ i) != l) pushdown(l >> i);\n\t\t\tif (((r >> i) << i) != r) pushdown((r - 1)\
+    \ >> i);\n\t\t}\n\t\tS resl = identity_elem(), resr = identity_elem();\n\t\tfor\
+    \ (; l < r; l >>= 1, r >>= 1) {\n\t\t\tif (l & 1) resl = operation(resl, dat[l++]);\n\
+    \t\t\tif (r & 1) resr = operation(dat[--r], resr);\n\t\t}\n\t\treturn operation(resl,\
+    \ resr);\n\t}\n\n\tS all_fold() const { return dat[1]; }\n\n\ttemplate <auto g>\n\
+    \tusize max_right(usize l) {\n\t\treturn max_right(l, [](const S &x) -> bool {\
+    \ return g(x); });\n\t}\n\n\ttemplate <typename G>\n\tusize max_right(usize l,\
+    \ const G &g) {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(g(identity_elem()));\n\
+    \t\tif (l == n) return n;\n\t\tl += sz;\n\t\tfor (usize i = log; i >= 1; --i)\
+    \ pushdown(l >> i);\n\t\tS prod = identity_elem();\n\t\tdo {\n\t\t\twhile (!(l\
+    \ & 1)) l >>= 1;\n\t\t\tif (!g(operation(prod, dat[l]))) {\n\t\t\t\twhile (l <\
+    \ sz) {\n\t\t\t\t\tpushdown(l);\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (g(operation(prod,\
+    \ dat[l]))) prod = op(prod, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\
+    \t}\n\t\t\tprod = op(prod, dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn\
+    \ n;\n\t}\n\n\ttemplate <auto g>\n\tusize min_left(usize r) {\n\t\treturn min_left(r,\
+    \ [](const S &x) -> bool { return g(x); });\n\t}\n\n\ttemplate <typename G>\n\t\
+    usize min_left(usize r, const G& g) {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(g(identity_elem()));\n\
+    \t\tif (r == 0) return 0;\n\t\tr += sz;\n\t\tfor (usize i = log; i >= 1; --i)\
+    \ pushdown((r - 1) >> i);\n\t\tS prod = identity_elem();\n\t\tdo {\n\t\t\t--r;\n\
+    \t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!g(operation(dat[r], prod)))\
+    \ {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tpushdown(r);\n\t\t\t\t\tr = r * 2 + 1;\n\
+    \t\t\t\t\tif (g(operation(dat[r], prod))) prod = operation(dat[r--], prod);\n\t\
+    \t\t\t}\n\t\t\t\treturn r + 1 - sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\
+    \t\t} while ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n};"
   dependsOn:
+  - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
   isVerificationFile: false
-  path: cpstl/other/Template.hpp
-  requiredBy:
-  - cpstl/ds/LazySegtree.hpp
-  - cpstl/ds/Segtree.hpp
-  - cpstl/ds/Dsu.hpp
-  - cpstl/math/StaticModint.hpp
-  - cpstl/other/Fastio.hpp
+  path: cpstl/ds/LazySegtree.hpp
+  requiredBy: []
   timestamp: '2025-10-30 19:11:20+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp
-  - verify/ds/lc-Union-Find-Dsu.test.cpp
-  - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-documentation_of: cpstl/other/Template.hpp
+documentation_of: cpstl/ds/LazySegtree.hpp
 layout: document
 redirect_from:
-- /library/cpstl/other/Template.hpp
-- /library/cpstl/other/Template.hpp.html
-title: cpstl/other/Template.hpp
+- /library/cpstl/ds/LazySegtree.hpp
+- /library/cpstl/ds/LazySegtree.hpp.html
+title: cpstl/ds/LazySegtree.hpp
 ---

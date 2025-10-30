@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/point_add_range_sum
@@ -123,7 +123,7 @@ data:
     \ T>\nvoid print_real(T tg) {\n\tstd::ostringstream oss;\n\toss << std::fixed\
     \ << std::setprecision(15) << double(tg);\n\tstd::string s = oss.str();\n\t_print(s);\n\
     }\n\nvoid _print(int tg) { print_int(tg); }\nvoid _print(unsigned int tg) { print_int(tg);\
-    \ }\nvoid _print(unsigned long tg) { print_int(tg); }\nvoid _print(long long tg)\
+    \ }\nvoid _print(unsigned long tg) { print_int(tg);}\nvoid _print(long long tg)\
     \ { print_int(tg); }\nvoid _print(unsigned long long tg) { print_int(tg); }\n\
     void _print(__int128 tg) { print_int(tg); }\nvoid _print(unsigned __int128 tg)\
     \ { print_int(tg); }\nvoid _print(float tg) { print_real(tg); }\nvoid _print(double\
@@ -155,54 +155,54 @@ data:
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
     using usize = std::size_t;\n#line 3 \"cpstl/ds/Segtree.hpp\"\n\nnamespace cpstd\
-    \ {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tS identity_elem\n>\nclass\
-    \ Segtree {\n\tpublic:\n\tusing value_type = S;\n\n\tprivate:\n\tstd::vector<S>\
-    \ dat;\n\tusize n, sz;\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1) {\n\t\
-    \t\tidx >>= 1;\n\t\t\tdat[idx] = operation(dat[idx * 2], dat[idx * 2 + 1]);\n\t\
-    \t}\n\t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit Segtree(u32 N) : Segtree(std::vector<S>(N,\
-    \ identity_elem)) {}\n\n\tSegtree(u32 N, const S &x) : Segtree(std::vector<S>(N,\
-    \ x)) {}\n\n\texplicit Segtree(const std::vector<S> &v) : n((u32)v.size()) {\n\
-    \t\tsz = 1;\n\t\twhile (sz < n) sz <<= 1;\n\t\tdat.assign(sz * 2, identity_elem);\n\
-    \t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\t\tfor (usize i = sz -\
-    \ 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);\n\t}\n\n\tvoid\
-    \ set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\t\tidx += sz;\n\t\tdat[idx]\
-    \ = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx, const S &x) {\n\t\tassert(idx\
-    \ < n);\n\t\tidx += sz;\n\t\tdat[idx] += x;\n\t\tpushup(idx);\n\t}\n\n\tS fold(usize\
-    \ l, usize r) const {\n\t\tassert(l <= r && r <= n);\n\t\tS resl = identity_elem,\
-    \ resr = identity_elem;\n\t\tfor (l += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\
-    \t\t\tif (l & 1) resl = operation(resl, dat[l++]);\n\t\t\tif (r & 1) resr = operation(dat[--r],\
-    \ resr);\n\t\t}\n\t\treturn operation(resl, resr);\n\t}\n\n\tS all_fold() const\
-    \ noexcept { return dat[1]; }\n\n\tS get(usize idx) const {\n\t\tassert(0 <= idx\
-    \ && idx < n);\n\t\treturn dat[idx + sz];\n\t}\n\n\tS operator[](usize idx) const\
-    \ noexcept { return dat[idx + sz]; }\n\n\ttemplate <typename F>\n\tusize max_right(usize\
-    \ l, const F &f) const {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(f(identity_elem));\n\
-    \t\tif (l == n) return n;\n\t\tl += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\
+    \ {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\n\
+    class Segtree {\n\tprivate:\n\tstd::vector<S> dat;\n\tusize n, sz;\n\n\tvoid pushup(usize\
+    \ idx) {\n\t\twhile (idx > 1) {\n\t\t\tidx >>= 1;\n\t\t\tdat[idx] = operation(dat[idx\
+    \ * 2], dat[idx * 2 + 1]);\n\t\t}\n\t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit\
+    \ Segtree(u32 N) : Segtree(std::vector<S>(N, identity_elem())) {}\n\n\tSegtree(u32\
+    \ N, const S &x) : Segtree(std::vector<S>(N, x)) {}\n\n\texplicit Segtree(const\
+    \ std::vector<S> &v) : n((u32)v.size()) {\n\t\tsz = std::bit_ceil(n);\n\t\tdat.assign(sz\
+    \ * 2, identity_elem);\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
+    \t\tfor (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i *\
+    \ 2 + 1]);\n\t}\n\n\tvoid set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\
+    \t\tidx += sz;\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx,\
+    \ const S &x) {\n\t\tassert(idx < n);\n\t\tidx += sz;\n\t\tdat[idx] += x;\n\t\t\
+    pushup(idx);\n\t}\n\n\tS fold(usize l, usize r) const {\n\t\tassert(l <= r &&\
+    \ r <= n);\n\t\tS resl = identity_elem(), resr = identity_elem();\n\t\tfor (l\
+    \ += sz, r += sz; l < r; l >>= 1, r >>= 1) {\n\t\t\tif (l & 1) resl = operation(resl,\
+    \ dat[l++]);\n\t\t\tif (r & 1) resr = operation(dat[--r], resr);\n\t\t}\n\t\t\
+    return operation(resl, resr);\n\t}\n\n\tS all_fold() const noexcept { return dat[1];\
+    \ }\n\n\tS get(usize idx) const {\n\t\tassert(0 <= idx && idx < n);\n\t\treturn\
+    \ dat[idx + sz];\n\t}\n\n\tS operator[](usize idx) const noexcept { return dat[idx\
+    \ + sz]; }\n\n\ttemplate <typename F>\n\tusize max_right(usize l, const F &f)\
+    \ const {\n\t\tassert(0 <= l && l <= n);\n\t\tassert(f(identity_elem()));\n\t\t\
+    if (l == n) return n;\n\t\tl += sz;\n\t\tS prod = identity_elem();\n\t\tdo {\n\
     \t\t\twhile (!(l & 1)) l >>= 1;\n\t\t\tif (!f(operation(prod, dat[l]))) {\n\t\t\
     \t\twhile (l < sz) {\n\t\t\t\t\tl <<= 1;\n\t\t\t\t\tif (f(op(prod, dat[l]))) prod\
     \ = operation(prod, dat[l++]);\n\t\t\t\t}\n\t\t\t\treturn l - sz;\n\t\t\t}\n\t\
     \t\tprod = operation(prod, dat[l++]);\n\t\t} while ((l & -l) != l);\n\t\treturn\
     \ n;\n\t}\n\n\ttemplate <typename F>\n\tusize min_left(usize r, const F &f) const\
-    \ {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(f(identity_elem));\n\t\tif (r ==\
-    \ 0) return 0;\n\t\tr += sz;\n\t\tS prod = identity_elem;\n\t\tdo {\n\t\t\t--r;\n\
-    \t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(operation(dat[r], prod)))\
-    \ {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r * 2 + 1;\n\t\t\t\t\tif (f(op(dat[r],\
-    \ prod))) prod = operation(dat[r--], prod);\n\t\t\t\t}\n\t\t\t\treturn r + 1 -\
-    \ sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\t\t} while ((r & -r) !=\
-    \ r);\n\t\treturn 0;\n\t}\n};\n};\n#line 5 \"verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp\"\
-    \n\nu64 op(u64 a, u64 b) { return a + b; }\n\nint main() {\n\ti32 N, Q;\n\tcpstd::input(N,\
-    \ Q);\n\tstd::vector<u64> A(N);\n\tcpstd::input(A);\n\tcpstd::Segtree<u64, op,\
-    \ 0> sg(A);\n\ti32 t;\n\twhile (Q--) {\n\t\tcpstd::input(t);\n\t\tif (t == 0)\
-    \ {\n\t\t\ti32 p;\n\t\t\tu64 x;\n\t\t\tcpstd::input(p, x);\n\t\t\tsg.add(p, x);\n\
-    \t\t}\n\t\telse {\n\t\t\ti32 l, r;\n\t\t\tcpstd::input(l, r);\n\t\t\tcpstd::println(sg.fold(l,\
-    \ r));\n\t\t}\n\t}\n\treturn 0;\n}\n"
+    \ {\n\t\tassert(0 <= r && r <= n);\n\t\tassert(f(identity_elem()));\n\t\tif (r\
+    \ == 0) return 0;\n\t\tr += sz;\n\t\tS prod = identity_elem();\n\t\tdo {\n\t\t\
+    \t--r;\n\t\t\twhile (r > 1 && (r & 1)) r >>= 1;\n\t\t\tif (!f(operation(dat[r],\
+    \ prod))) {\n\t\t\t\twhile (r < sz) {\n\t\t\t\t\tr = r * 2 + 1;\n\t\t\t\t\tif\
+    \ (f(op(dat[r], prod))) prod = operation(dat[r--], prod);\n\t\t\t\t}\n\t\t\t\t\
+    return r + 1 - sz;\n\t\t\t}\n\t\t\tprod = operation(dat[r], prod);\n\t\t} while\
+    \ ((r & -r) != r);\n\t\treturn 0;\n\t}\n};\n};\n#line 5 \"verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp\"\
+    \n\nu64 op(u64 a, u64 b) { return a + b; }\nu64 e() { return 0; }\n\nint main()\
+    \ {\n\ti32 N, Q;\n\tcpstd::input(N, Q);\n\tstd::vector<u64> A(N);\n\tcpstd::input(A);\n\
+    \tcpstd::Segtree<u64, op, e> sg(A);\n\ti32 t;\n\twhile (Q--) {\n\t\tcpstd::input(t);\n\
+    \t\tif (t == 0) {\n\t\t\ti32 p;\n\t\t\tu64 x;\n\t\t\tcpstd::input(p, x);\n\t\t\
+    \tsg.add(p, x);\n\t\t}\n\t\telse {\n\t\t\ti32 l, r;\n\t\t\tcpstd::input(l, r);\n\
+    \t\t\tcpstd::println(sg.fold(l, r));\n\t\t}\n\t}\n\treturn 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/point_add_range_sum\"\n\
     \n#include \"cpstl/other/Template.hpp\"\n#include \"cpstl/ds/Segtree.hpp\"\n\n\
-    u64 op(u64 a, u64 b) { return a + b; }\n\nint main() {\n\ti32 N, Q;\n\tcpstd::input(N,\
-    \ Q);\n\tstd::vector<u64> A(N);\n\tcpstd::input(A);\n\tcpstd::Segtree<u64, op,\
-    \ 0> sg(A);\n\ti32 t;\n\twhile (Q--) {\n\t\tcpstd::input(t);\n\t\tif (t == 0)\
-    \ {\n\t\t\ti32 p;\n\t\t\tu64 x;\n\t\t\tcpstd::input(p, x);\n\t\t\tsg.add(p, x);\n\
-    \t\t}\n\t\telse {\n\t\t\ti32 l, r;\n\t\t\tcpstd::input(l, r);\n\t\t\tcpstd::println(sg.fold(l,\
-    \ r));\n\t\t}\n\t}\n\treturn 0;\n}\n"
+    u64 op(u64 a, u64 b) { return a + b; }\nu64 e() { return 0; }\n\nint main() {\n\
+    \ti32 N, Q;\n\tcpstd::input(N, Q);\n\tstd::vector<u64> A(N);\n\tcpstd::input(A);\n\
+    \tcpstd::Segtree<u64, op, e> sg(A);\n\ti32 t;\n\twhile (Q--) {\n\t\tcpstd::input(t);\n\
+    \t\tif (t == 0) {\n\t\t\ti32 p;\n\t\t\tu64 x;\n\t\t\tcpstd::input(p, x);\n\t\t\
+    \tsg.add(p, x);\n\t\t}\n\t\telse {\n\t\t\ti32 l, r;\n\t\t\tcpstd::input(l, r);\n\
+    \t\t\tcpstd::println(sg.fold(l, r));\n\t\t}\n\t}\n\treturn 0;\n}\n"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
@@ -211,8 +211,8 @@ data:
   isVerificationFile: true
   path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   requiredBy: []
-  timestamp: '2025-10-29 21:53:31+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2025-10-30 19:11:20+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
 layout: document
