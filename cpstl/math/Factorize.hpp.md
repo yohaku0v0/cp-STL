@@ -2,8 +2,8 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: cpstl/ds/Dsu.hpp
-    title: cpstl/ds/Dsu.hpp
+    path: cpstl/math/MillerRabin.hpp
+    title: cpstl/math/MillerRabin.hpp
   - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
@@ -14,32 +14,30 @@ data:
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/math/lc-Factorize.test.cpp
+    title: verify/math/lc-Factorize.test.cpp
   _isVerificationFailed: false
-  _pathExtension: cpp
+  _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/unionfind
-    links:
-    - https://judge.yosupo.jp/problem/unionfind
-  bundledCode: "#line 1 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/unionfind\"\n\n#line 2 \"cpstl/other/Template.hpp\"\
-    \n#include <bits/stdc++.h>\n#line 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace\
-    \ cpstd {\n\ntemplate <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\tusing\
-    \ mint = StaticModint;\n\tuint32_t _v = 0;\n\n\tstatic constexpr bool is_prime\
-    \ = []() -> bool {\n\t\tif (m == 1) return false;\n\t\tif (m == 2 || m == 7 ||\
-    \ m == 61) return true;\n\t\tif (!(m & 1)) return false;\n\t\tuint32_t d = m -\
-    \ 1;\n\t\twhile (!(d & 1)) d >>= 1;\n\t\tfor (uint32_t a : {2, 7, 61}) {\n\t\t\
-    \tuint32_t t = d;\n\t\t\tmint y = mint(a).pow(t);\n\t\t\twhile (t != m - 1 &&\
-    \ y != 1 && y != m - 1) {\n\t\t\t\ty *= y;\n\t\t\t\tt <<= 1;\n\t\t\t}\n\t\t\t\
-    if (y != m - 1 && !(t & 1)) return false;\n\t\t}\n\t\treturn true;\n\t}();\n\t\
-    \n\tstatic constexpr std::pair<int32_t, int32_t> inv_gcd(int32_t a, int32_t b)\
-    \ {\n\t\tif (a == 0) return {b, 0};\n\t\tint32_t s = b, t = a, m0 = 0, m1 = 1;\n\
-    \t\twhile (t) {\n\t\t\tconst int32_t q = s / t;\n\t\t\ts -= t * q, std::swap(s,\
-    \ t);\n\t\t\tm0 -= m1 * q, std::swap(m0, m1);\n\t\t}\n\t\tif (m0 < 0) m0 += b\
-    \ / s;\n\t\treturn {s, m0};\n\t}\n\n\tpublic:\n\tconstexpr StaticModint() {}\n\
-    \ttemplate <typename T>\n\tconstexpr StaticModint(T v) {\n\t\tstatic_assert(std::is_integral_v<T>,\
+    links: []
+  bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
+    \ 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace cpstd {\n\ntemplate <uint32_t\
+    \ m>\nstruct StaticModint {\n\tprivate:\n\tusing mint = StaticModint;\n\tuint32_t\
+    \ _v = 0;\n\n\tstatic constexpr bool is_prime = []() -> bool {\n\t\tif (m == 1)\
+    \ return false;\n\t\tif (m == 2 || m == 7 || m == 61) return true;\n\t\tif (!(m\
+    \ & 1)) return false;\n\t\tuint32_t d = m - 1;\n\t\twhile (!(d & 1)) d >>= 1;\n\
+    \t\tfor (uint32_t a : {2, 7, 61}) {\n\t\t\tuint32_t t = d;\n\t\t\tmint y = mint(a).pow(t);\n\
+    \t\t\twhile (t != m - 1 && y != 1 && y != m - 1) {\n\t\t\t\ty *= y;\n\t\t\t\t\
+    t <<= 1;\n\t\t\t}\n\t\t\tif (y != m - 1 && !(t & 1)) return false;\n\t\t}\n\t\t\
+    return true;\n\t}();\n\t\n\tstatic constexpr std::pair<int32_t, int32_t> inv_gcd(int32_t\
+    \ a, int32_t b) {\n\t\tif (a == 0) return {b, 0};\n\t\tint32_t s = b, t = a, m0\
+    \ = 0, m1 = 1;\n\t\twhile (t) {\n\t\t\tconst int32_t q = s / t;\n\t\t\ts -= t\
+    \ * q, std::swap(s, t);\n\t\t\tm0 -= m1 * q, std::swap(m0, m1);\n\t\t}\n\t\tif\
+    \ (m0 < 0) m0 += b / s;\n\t\treturn {s, m0};\n\t}\n\n\tpublic:\n\tconstexpr StaticModint()\
+    \ {}\n\ttemplate <typename T>\n\tconstexpr StaticModint(T v) {\n\t\tstatic_assert(std::is_integral_v<T>,\
     \ \"T is not integral type.\");\n\t\tif constexpr (std::is_signed_v<T>) {\n\t\t\
     \tint64_t x = int64_t(v % int64_t(m));\n\t\t\tif (x < 0) x += m;\n\t\t\t_v = uint32_t(x);\n\
     \t\t}\n\t\telse _v = uint32_t(v % m);\n\t}\n\n\tstatic constexpr mint raw(uint32_t\
@@ -166,51 +164,84 @@ data:
     \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
     \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
     \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
-    ));\n}\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\ntemplate <\n\ttypename\
-    \ S,\n\tauto operation,\n\tauto identity_elem\n>\nclass Dsu {\n\tprivate:\n\t\
-    i32 n;\n\tstd::vector<std::pair<i32, S>> tree;\n\n\ti32 _leader(i32 x) {\n\t\t\
-    return tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\t}\n\n\
-    \tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()})\
-    \ {}\n\t\n\texplicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\
-    \t\tfor (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32\
-    \ x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32\
-    \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
-    a = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
-    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
-    tree[a].second = operation(tree[a].second, tree[b].second);\n\t\ttree[b].first\
-    \ = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32 a, i32 b) {\n\t\tassert(0 <=\
-    \ a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\treturn _leader(a) == _leader(b);\n\
-    \t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\
-    \t}\n\n\tS fold(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\
-    \t}\n\n\tstd::vector<std::vector<i32>> groups() {\n\t\tstd::vector<std::vector<i32>>\
-    \ mem, res;\n\t\tfor (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);\n\t\
-    \tfor (i32 i = 0; i < n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n#line 5 \"verify/ds/lc-Union-Find-Dsu.test.cpp\"\
-    \n\ni32 op(i32 a, i32 b) { return a; }\ni32 e() { return 0; }\n\nint main() {\n\
-    \ti32 N, Q;\n\tcpstd::input(N, Q);\n\tcpstd::Dsu<i32, op, e> dsu(N);\n\ti32 t,\
-    \ u, v;\n\twhile (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u,\
-    \ v);\n\t\telse cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind\"\n\n#include\
-    \ \"cpstl/other/Template.hpp\"\n#include \"cpstl/ds/Dsu.hpp\"\n\ni32 op(i32 a,\
-    \ i32 b) { return a; }\ni32 e() { return 0; }\n\nint main() {\n\ti32 N, Q;\n\t\
-    cpstd::input(N, Q);\n\tcpstd::Dsu<i32, op, e> dsu(N);\n\ti32 t, u, v;\n\twhile\
-    \ (Q--) {\n\t\tcpstd::input(t, u, v);\n\t\tif (t == 0) dsu.merge(u, v);\n\t\t\
-    else cpstd::println((dsu.same(u, v) ? \"1\" : \"0\"));\n\t}\n}\n"
+    ));\n}\n#line 3 \"cpstl/math/MillerRabin.hpp\"\n\nnamespace cpstd {\n\nconstexpr\
+    \ bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n & 1)) return\
+    \ n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d & 1)) ++ s, d\
+    \ >>= 1;\n\twhile (!(d >> q)) --q;\n\tu64 r = n;\n\tfor (usize i = 0; i < 6; ++i)\
+    \ r *= 2 - r * n;\n\tu128 n2 = -(u128)n % n;\n\tauto reduction = [&](u128 t) noexcept\
+    \ -> u64 {\n\t\tt = (t + (u128)((u64)t * -r) * n) >> 64;\n\t\treturn t < n ? t\
+    \ : t - n;\n\t};\n\tu64 one = reduction(n2);\n\tfor (u64 base : {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022}) {\n\t\tif (!(base % n)) continue;\n\t\t\
+    u64 a = base = reduction(base % n * n2);\n\t\tfor (i32 e = q - 1; e >= 0; --e)\
+    \ {\n\t\t\ta = reduction((u128)a * a);\n\t\t\tif (d >> e & 1) a = reduction((u128)a\
+    \ * base);\n\t\t}\n\t\tif (a == one) continue;\n\t\tfor (usize t = 1; (t < s &&\
+    \ a != n - one); ++t) a = reduction((u128)a * a);\n\t\tif (a != n - one) return\
+    \ false;\n\t}\n\treturn true;\n}\n};\n#line 4 \"cpstl/math/Factorize.hpp\"\n\n\
+    namespace cpstd {\n\nstd::vector<std::pair<u64, usize>> Factorize(u64 n) {\n\t\
+    if (n <= 1) return {};\n\tif (cpstd::MillerRabin(n)) return {{n, 1}};\n\tu64 X\
+    \ = n;\n\tstd::vector<u64> p;\n\tfor (u64 i = 2; i < 100; i += 1 + (i & 1)) {\n\
+    \t\tif (n % i) continue;\n\t\tp.push_back(i);\n\t\twhile (!(n % i)) n /= i;\n\t\
+    }\n\tu64 r = 1;\n\tu128 n2 = 1;\n\tauto update = [&]() {\n\t\tr = n;\n\t\tfor\
+    \ (usize i = 0; i < 6; ++i) r *= 2 - r * n;\n\t\tn2 = -(u128)n % n;\n\t};\n\t\
+    auto reduction = [&](u128 t) noexcept -> u64 {\n\t\tu64 s = ((u128)n * ((u64)t\
+    \ * r)) >> 64, t2 = t >> 64;\n\t\treturn t2 - s + (t2 < s ? n : 0);\n\t};\n\t\
+    auto mul = [&](u64 a, u64 b) noexcept -> u64 {\n\t\treturn reduction((u128)reduction((u128)a\
+    \ * n2) * b);\n\t};\n\tstatic u64 v = 7001;\n\tp.push_back(n);\n\tfor (usize pi\
+    \ = p.size() - 1; pi < p.size(); ++pi) {\n\t\twhile (p[pi] != 1 && !cpstd::MillerRabin(p[pi]))\
+    \ {\n\t\t\tn = p[pi], update();\n\t\t\twhile (p[pi] == n) {\n\t\t\t\tv ^= v <<\
+    \ 13, v ^= v >> 7, v ^= v << 17;\n\t\t\t\tu64 c = reduction(v);\n\t\t\t\tif (!c)\
+    \ continue;\n\t\t\t\tauto f = [&](u64 a) noexcept -> u64 {\n\t\t\t\t\treturn reduction((u128)a\
+    \ * a + c);\n\t\t\t\t};\n\t\t\t\tu64 a = 0, b = f(a), buf = 1, sz = 1, nxt = 10;\n\
+    \t\t\t\twhile (true) {\n\t\t\t\t\twhile (nxt != sz && a != b) {\n\t\t\t\t\t\t\
+    buf = mul(buf, a > b ? a - b : b - a);\n\t\t\t\t\t\t++sz;\n\t\t\t\t\t\ta = f(a),\
+    \ b = f(f(b));\n\t\t\t\t\t}\n\t\t\t\t\tu64 g = Binarygcd(buf, n);\n\t\t\t\t\t\
+    if (g != 1) {\n\t\t\t\t\t\twhile (!(p[pi] % g)) p[pi] /= g;\n\t\t\t\t\t\tp.push_back(g);\n\
+    \t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t\tif (a == b) break;\n\t\t\t\t\tnxt =\
+    \ sz * 3 >> 1;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\tstd::vector<std::pair<u64, usize>>\
+    \ res;\n\tfor (u64 q : p) {\n\t\tif (q == 1) continue;\n\t\tusize e = 0;\n\t\t\
+    while (!(X % q)) ++e, X /= q;\n\t\tif (e) res.emplace_back(q, e);\n\t}\n\tstd::sort(res.begin(),\
+    \ res.end());\n\treturn res;\n}\n};\n"
+  code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n#include \"cpstl/math/MillerRabin.hpp\"\
+    \n\nnamespace cpstd {\n\nstd::vector<std::pair<u64, usize>> Factorize(u64 n) {\n\
+    \tif (n <= 1) return {};\n\tif (cpstd::MillerRabin(n)) return {{n, 1}};\n\tu64\
+    \ X = n;\n\tstd::vector<u64> p;\n\tfor (u64 i = 2; i < 100; i += 1 + (i & 1))\
+    \ {\n\t\tif (n % i) continue;\n\t\tp.push_back(i);\n\t\twhile (!(n % i)) n /=\
+    \ i;\n\t}\n\tu64 r = 1;\n\tu128 n2 = 1;\n\tauto update = [&]() {\n\t\tr = n;\n\
+    \t\tfor (usize i = 0; i < 6; ++i) r *= 2 - r * n;\n\t\tn2 = -(u128)n % n;\n\t\
+    };\n\tauto reduction = [&](u128 t) noexcept -> u64 {\n\t\tu64 s = ((u128)n * ((u64)t\
+    \ * r)) >> 64, t2 = t >> 64;\n\t\treturn t2 - s + (t2 < s ? n : 0);\n\t};\n\t\
+    auto mul = [&](u64 a, u64 b) noexcept -> u64 {\n\t\treturn reduction((u128)reduction((u128)a\
+    \ * n2) * b);\n\t};\n\tstatic u64 v = 7001;\n\tp.push_back(n);\n\tfor (usize pi\
+    \ = p.size() - 1; pi < p.size(); ++pi) {\n\t\twhile (p[pi] != 1 && !cpstd::MillerRabin(p[pi]))\
+    \ {\n\t\t\tn = p[pi], update();\n\t\t\twhile (p[pi] == n) {\n\t\t\t\tv ^= v <<\
+    \ 13, v ^= v >> 7, v ^= v << 17;\n\t\t\t\tu64 c = reduction(v);\n\t\t\t\tif (!c)\
+    \ continue;\n\t\t\t\tauto f = [&](u64 a) noexcept -> u64 {\n\t\t\t\t\treturn reduction((u128)a\
+    \ * a + c);\n\t\t\t\t};\n\t\t\t\tu64 a = 0, b = f(a), buf = 1, sz = 1, nxt = 10;\n\
+    \t\t\t\twhile (true) {\n\t\t\t\t\twhile (nxt != sz && a != b) {\n\t\t\t\t\t\t\
+    buf = mul(buf, a > b ? a - b : b - a);\n\t\t\t\t\t\t++sz;\n\t\t\t\t\t\ta = f(a),\
+    \ b = f(f(b));\n\t\t\t\t\t}\n\t\t\t\t\tu64 g = Binarygcd(buf, n);\n\t\t\t\t\t\
+    if (g != 1) {\n\t\t\t\t\t\twhile (!(p[pi] % g)) p[pi] /= g;\n\t\t\t\t\t\tp.push_back(g);\n\
+    \t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t\tif (a == b) break;\n\t\t\t\t\tnxt =\
+    \ sz * 3 >> 1;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\tstd::vector<std::pair<u64, usize>>\
+    \ res;\n\tfor (u64 q : p) {\n\t\tif (q == 1) continue;\n\t\tusize e = 0;\n\t\t\
+    while (!(X % q)) ++e, X /= q;\n\t\tif (e) res.emplace_back(q, e);\n\t}\n\tstd::sort(res.begin(),\
+    \ res.end());\n\treturn res;\n}\n};"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
-  - cpstl/ds/Dsu.hpp
-  isVerificationFile: true
-  path: verify/ds/lc-Union-Find-Dsu.test.cpp
+  - cpstl/math/MillerRabin.hpp
+  isVerificationFile: false
+  path: cpstl/math/Factorize.hpp
   requiredBy: []
   timestamp: '2025-10-31 00:47:43+09:00'
-  verificationStatus: TEST_ACCEPTED
-  verifiedWith: []
-documentation_of: verify/ds/lc-Union-Find-Dsu.test.cpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/math/lc-Factorize.test.cpp
+documentation_of: cpstl/math/Factorize.hpp
 layout: document
 redirect_from:
-- /verify/verify/ds/lc-Union-Find-Dsu.test.cpp
-- /verify/verify/ds/lc-Union-Find-Dsu.test.cpp.html
-title: verify/ds/lc-Union-Find-Dsu.test.cpp
+- /library/cpstl/math/Factorize.hpp
+- /library/cpstl/math/Factorize.hpp.html
+title: cpstl/math/Factorize.hpp
 ---

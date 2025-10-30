@@ -10,8 +10,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: cpstl/math/Factorize.hpp
+    title: cpstl/math/Factorize.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/math/lc-Factorize.test.cpp
+    title: verify/math/lc-Factorize.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/math/lc-Primality-Test.test.cpp
     title: verify/math/lc-Primality-Test.test.cpp
@@ -156,20 +162,24 @@ data:
     \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
-    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 3 \"cpstl/math/MillerRabin.hpp\"\n\nnamespace cpstd {\n\
-    \nconstexpr bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n\
-    \ & 1)) return n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d &\
-    \ 1)) ++ s, d >>= 1;\n\twhile (!(d >> q)) --q;\n\tu64 r = n;\n\tfor (usize i =\
-    \ 0; i < 6; ++i) r *= 2 - r * n;\n\tu128 n2 = -(u128)n % n;\n\tauto reduction\
-    \ = [&](u128 t) noexcept -> u64 {\n\t\tt = (t + (u128)((u64)t * -r) * n) >> 64;\n\
-    \t\treturn t < n ? t : t - n;\n\t};\n\tu64 one = reduction(n2);\n\tfor (u64 base\
-    \ : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {\n\t\tif (!(base % n))\
-    \ continue;\n\t\tu64 a = base = reduction(base % n * n2);\n\t\tfor (i32 e = q\
-    \ - 1; e >= 0; --e) {\n\t\t\ta = reduction((u128)a * a);\n\t\t\tif (d >> e & 1)\
-    \ a = reduction((u128)a * base);\n\t\t}\n\t\tif (a == one) continue;\n\t\tfor\
-    \ (usize t = 1; (t < s && a != n - one); ++t) a = reduction((u128)a * a);\n\t\t\
-    if (a != n - one) return false;\n\t}\n\treturn true;\n}\n};\n"
+    \t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64 a, u64 b) {\n\tif (!a ||\
+    \ !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a | b);\n\ta >>= __builtin_ctzll(a),\
+    \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
+    \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
+    \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
+    ));\n}\n#line 3 \"cpstl/math/MillerRabin.hpp\"\n\nnamespace cpstd {\n\nconstexpr\
+    \ bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n & 1)) return\
+    \ n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d & 1)) ++ s, d\
+    \ >>= 1;\n\twhile (!(d >> q)) --q;\n\tu64 r = n;\n\tfor (usize i = 0; i < 6; ++i)\
+    \ r *= 2 - r * n;\n\tu128 n2 = -(u128)n % n;\n\tauto reduction = [&](u128 t) noexcept\
+    \ -> u64 {\n\t\tt = (t + (u128)((u64)t * -r) * n) >> 64;\n\t\treturn t < n ? t\
+    \ : t - n;\n\t};\n\tu64 one = reduction(n2);\n\tfor (u64 base : {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022}) {\n\t\tif (!(base % n)) continue;\n\t\t\
+    u64 a = base = reduction(base % n * n2);\n\t\tfor (i32 e = q - 1; e >= 0; --e)\
+    \ {\n\t\t\ta = reduction((u128)a * a);\n\t\t\tif (d >> e & 1) a = reduction((u128)a\
+    \ * base);\n\t\t}\n\t\tif (a == one) continue;\n\t\tfor (usize t = 1; (t < s &&\
+    \ a != n - one); ++t) a = reduction((u128)a * a);\n\t\tif (a != n - one) return\
+    \ false;\n\t}\n\treturn true;\n}\n};\n"
   code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
     \nconstexpr bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n\
     \ & 1)) return n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d &\
@@ -189,10 +199,12 @@ data:
   - cpstl/other/Fastio.hpp
   isVerificationFile: false
   path: cpstl/math/MillerRabin.hpp
-  requiredBy: []
-  timestamp: '2025-10-30 20:16:54+09:00'
+  requiredBy:
+  - cpstl/math/Factorize.hpp
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/math/lc-Factorize.test.cpp
   - verify/math/lc-Primality-Test.test.cpp
 documentation_of: cpstl/math/MillerRabin.hpp
 layout: document

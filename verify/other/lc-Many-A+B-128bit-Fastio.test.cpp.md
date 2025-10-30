@@ -158,10 +158,14 @@ data:
     \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
-    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 4 \"verify/other/lc-Many-A+B-128bit-Fastio.test.cpp\"\n\
-    \nint main() {\n\tint T;\n\tcpstd::input(T);\n\ti128 A, B;\n\twhile (T--) {\n\t\
-    \tcpstd::input(A, B);\n\t\tcpstd::println(A + B);\n\t}\n}\n"
+    \t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64 a, u64 b) {\n\tif (!a ||\
+    \ !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a | b);\n\ta >>= __builtin_ctzll(a),\
+    \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
+    \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
+    \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
+    ));\n}\n#line 4 \"verify/other/lc-Many-A+B-128bit-Fastio.test.cpp\"\n\nint main()\
+    \ {\n\tint T;\n\tcpstd::input(T);\n\ti128 A, B;\n\twhile (T--) {\n\t\tcpstd::input(A,\
+    \ B);\n\t\tcpstd::println(A + B);\n\t}\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n\
     #include \"cpstl/other/Template.hpp\"\n\nint main() {\n\tint T;\n\tcpstd::input(T);\n\
     \ti128 A, B;\n\twhile (T--) {\n\t\tcpstd::input(A, B);\n\t\tcpstd::println(A +\
@@ -173,7 +177,7 @@ data:
   isVerificationFile: true
   path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
   requiredBy: []
-  timestamp: '2025-10-30 20:16:54+09:00'
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp

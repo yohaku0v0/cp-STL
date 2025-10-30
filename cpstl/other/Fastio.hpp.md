@@ -18,6 +18,9 @@ data:
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
+    path: cpstl/math/Factorize.hpp
+    title: cpstl/math/Factorize.hpp
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/MillerRabin.hpp
     title: cpstl/math/MillerRabin.hpp
   - icon: ':heavy_check_mark:'
@@ -36,6 +39,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Union-Find-Dsu.test.cpp
     title: verify/ds/lc-Union-Find-Dsu.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/math/lc-Factorize.test.cpp
+    title: verify/math/lc-Factorize.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/math/lc-Primality-Test.test.cpp
     title: verify/math/lc-Primality-Test.test.cpp
@@ -100,19 +106,23 @@ data:
     \ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128\
     \ x, u128 n, u128 m) {\n\tif (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ?\
     \ x % m + m : x % m);\n\twhile (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\t\
-    a = a * a % m;\n\t\tn >>= 1;\n\t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\t\
-    cpstd::println((flag ? \"Yes\" : \"No\"));\n}\n#line 3 \"cpstl/other/Fastio.hpp\"\
-    \n\nnamespace cpstd {\n\nnamespace Fastio {\n\nstatic constexpr const uint32_t\
-    \ BUF_SIZE = 1 << 17;\nchar ibuf[BUF_SIZE], obuf[BUF_SIZE], out[100];\nuint32_t\
-    \ pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n\tchar num[10000][4];\n\n\tconstexpr\
-    \ Pre() : num() {\n\t\tfor (int i = 0; i < 10000; ++i) {\n\t\t\tint n = i;\n\t\
-    \t\tfor (int j = 3; j >= 0; --j) {\n\t\t\t\tnum[i][j] = n % 10 | '0';\n\t\t\t\t\
-    n /= 10;\n\t\t\t}\n\t\t}\n\t}\n} constexpr pre;\n\ninline void load() {\n\tstd::memcpy(ibuf,\
-    \ ibuf + pil, pir - pil);\n\tpir = pir - pil + std::fread(ibuf + pir - pil, 1,\
-    \ BUF_SIZE - pir + pil, stdin);\n\tpil = 0;\n\tif (pir < BUF_SIZE) ibuf[pir++]\
-    \ = '\\n';\n}\n\ninline void flush() {\n\tfwrite(obuf, 1, por, stdout);\n\tpor\
-    \ = 0;\n}\n\nvoid _input(char &dest) {\n\tdo {\n\t\tif (pil + 1 > pir) load();\n\
-    \t\tdest = ibuf[pil++];\n\t} while (std::isspace(dest));\n}\n\nvoid _input(std::string\
+    a = a * a % m;\n\t\tn >>= 1;\n\t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64\
+    \ a, u64 b) {\n\tif (!a || !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a\
+    \ | b);\n\ta >>= __builtin_ctzll(a), b >>= __builtin_ctzll(b);\n\twhile (a !=\
+    \ b) {\n\t\tif (a > b) a -= b, b >>= __builtin_ctzll(b);\n\t\telse b -= a, a >>=\
+    \ __builtin_ctzll(a);\n\t}\n\treturn a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag\
+    \ ? \"Yes\" : \"No\"));\n}\n#line 3 \"cpstl/other/Fastio.hpp\"\n\nnamespace cpstd\
+    \ {\n\nnamespace Fastio {\n\nstatic constexpr const uint32_t BUF_SIZE = 1 << 17;\n\
+    char ibuf[BUF_SIZE], obuf[BUF_SIZE], out[100];\nuint32_t pil = 0, pir = 0, por\
+    \ = 0;\n\nstruct Pre {\n\tchar num[10000][4];\n\n\tconstexpr Pre() : num() {\n\
+    \t\tfor (int i = 0; i < 10000; ++i) {\n\t\t\tint n = i;\n\t\t\tfor (int j = 3;\
+    \ j >= 0; --j) {\n\t\t\t\tnum[i][j] = n % 10 | '0';\n\t\t\t\tn /= 10;\n\t\t\t\
+    }\n\t\t}\n\t}\n} constexpr pre;\n\ninline void load() {\n\tstd::memcpy(ibuf, ibuf\
+    \ + pil, pir - pil);\n\tpir = pir - pil + std::fread(ibuf + pir - pil, 1, BUF_SIZE\
+    \ - pir + pil, stdin);\n\tpil = 0;\n\tif (pir < BUF_SIZE) ibuf[pir++] = '\\n';\n\
+    }\n\ninline void flush() {\n\tfwrite(obuf, 1, por, stdout);\n\tpor = 0;\n}\n\n\
+    void _input(char &dest) {\n\tdo {\n\t\tif (pil + 1 > pir) load();\n\t\tdest =\
+    \ ibuf[pil++];\n\t} while (std::isspace(dest));\n}\n\nvoid _input(std::string\
     \ &dest) {\n\tdest.clear();\n\tchar c;\n\tdo {\n\t\tif (pil + 1 > pir) load();\n\
     \t\tc = ibuf[pil++];\n\t} while (std::isspace(c));\n\tdo {\n\t\tdest += c;\n\t\
     \tif (pil == pir) load();\n\t\tc = ibuf[pil++];\n\t} while (!std::isspace(c));\n\
@@ -280,13 +290,15 @@ data:
   - cpstl/ds/Dsu.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/math/MillerRabin.hpp
+  - cpstl/math/Factorize.hpp
   - cpstl/other/Template.hpp
-  timestamp: '2025-10-30 20:16:54+09:00'
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp
   - verify/ds/lc-Union-Find-Dsu.test.cpp
+  - verify/math/lc-Factorize.test.cpp
   - verify/math/lc-Primality-Test.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/other/Fastio.hpp

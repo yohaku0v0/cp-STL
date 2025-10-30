@@ -15,6 +15,9 @@ data:
   - name: cpstl/math
     pages:
     - icon: ':heavy_check_mark:'
+      path: cpstl/math/Factorize.hpp
+      title: cpstl/math/Factorize.hpp
+    - icon: ':heavy_check_mark:'
       path: cpstl/math/MillerRabin.hpp
       title: cpstl/math/MillerRabin.hpp
     - icon: ':heavy_check_mark:'
@@ -42,6 +45,9 @@ data:
       title: verify/ds/lc-Union-Find-Dsu.test.cpp
   - name: verify/math
     pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/math/lc-Factorize.test.cpp
+      title: verify/math/lc-Factorize.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/math/lc-Primality-Test.test.cpp
       title: verify/math/lc-Primality-Test.test.cpp

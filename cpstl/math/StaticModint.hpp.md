@@ -18,6 +18,9 @@ data:
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
+    path: cpstl/math/Factorize.hpp
+    title: cpstl/math/Factorize.hpp
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/MillerRabin.hpp
     title: cpstl/math/MillerRabin.hpp
   - icon: ':heavy_check_mark:'
@@ -36,6 +39,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Union-Find-Dsu.test.cpp
     title: verify/ds/lc-Union-Find-Dsu.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/math/lc-Factorize.test.cpp
+    title: verify/math/lc-Factorize.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/math/lc-Primality-Test.test.cpp
     title: verify/math/lc-Primality-Test.test.cpp
@@ -140,9 +146,13 @@ data:
     \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
-    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\tusing mint = StaticModint;\n\
+    \t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64 a, u64 b) {\n\tif (!a ||\
+    \ !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a | b);\n\ta >>= __builtin_ctzll(a),\
+    \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
+    \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
+    \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
+    ));\n}\n#line 3 \"cpstl/math/StaticModint.hpp\"\n\nnamespace cpstd {\n\ntemplate\
+    \ <uint32_t m>\nstruct StaticModint {\n\tprivate:\n\tusing mint = StaticModint;\n\
     \tuint32_t _v = 0;\n\n\tstatic constexpr bool is_prime = []() -> bool {\n\t\t\
     if (m == 1) return false;\n\t\tif (m == 2 || m == 7 || m == 61) return true;\n\
     \t\tif (!(m & 1)) return false;\n\t\tuint32_t d = m - 1;\n\t\twhile (!(d & 1))\
@@ -239,14 +249,16 @@ data:
   - cpstl/ds/Segtree.hpp
   - cpstl/ds/Dsu.hpp
   - cpstl/math/MillerRabin.hpp
+  - cpstl/math/Factorize.hpp
   - cpstl/other/Template.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-10-30 20:16:54+09:00'
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp
   - verify/ds/lc-Union-Find-Dsu.test.cpp
+  - verify/math/lc-Factorize.test.cpp
   - verify/math/lc-Primality-Test.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/math/StaticModint.hpp

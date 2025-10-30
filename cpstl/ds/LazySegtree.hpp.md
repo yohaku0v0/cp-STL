@@ -156,10 +156,14 @@ data:
     \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
-    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace cpstd {\n\n\
-    template <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\ttypename\
-    \ F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\nclass LazySegtree\
+    \t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64 a, u64 b) {\n\tif (!a ||\
+    \ !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a | b);\n\ta >>= __builtin_ctzll(a),\
+    \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
+    \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
+    \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
+    ));\n}\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace cpstd {\n\ntemplate\
+    \ <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\ttypename F,\n\t\
+    auto mapping,\n\tauto composition,\n\tauto identity_map\n>\nclass LazySegtree\
     \ {\n\tprivate:\n\tstd::vector<S> dat;\n\tstd::vector<F> lazy;\n\tusize n, sz,\
     \ log;\n\n\tvoid propagate(usize idx, const F &f) {\n\t\tdat[idx] = mapping(f,\
     \ dat[idx]);\n\t\tif (idx < sz) lazy[idx] = composition(f, lazy[idx]);\n\t}\n\n\
@@ -290,7 +294,7 @@ data:
   isVerificationFile: false
   path: cpstl/ds/LazySegtree.hpp
   requiredBy: []
-  timestamp: '2025-10-30 20:16:54+09:00'
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp

@@ -156,19 +156,23 @@ data:
     \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
-    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 3 \"cpstl/ds/Segtree.hpp\"\n\nnamespace cpstd {\n\ntemplate\
-    \ <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass Segtree\
-    \ {\n\tprivate:\n\tstd::vector<S> dat;\n\tusize n, sz;\n\n\tvoid pushup(usize\
-    \ idx) {\n\t\twhile (idx > 1) {\n\t\t\tidx >>= 1;\n\t\t\tdat[idx] = operation(dat[idx\
-    \ * 2], dat[idx * 2 + 1]);\n\t\t}\n\t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit\
-    \ Segtree(u32 N) : Segtree(std::vector<S>(N, identity_elem())) {}\n\n\tSegtree(u32\
-    \ N, const S &x) : Segtree(std::vector<S>(N, x)) {}\n\n\texplicit Segtree(const\
-    \ std::vector<S> &v) : n((u32)v.size()) {\n\t\tsz = std::bit_ceil(n);\n\t\tdat.assign(sz\
-    \ * 2, identity_elem());\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\
-    \t\tfor (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i *\
-    \ 2 + 1]);\n\t}\n\n\tvoid set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\
-    \t\tidx += sz;\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx,\
+    \t}\n\treturn res;\n}\n\nconstexpr u64 Binarygcd(u64 a, u64 b) {\n\tif (!a ||\
+    \ !b) return a | b;\n\tconst i32 n = __builtin_ctzll(a | b);\n\ta >>= __builtin_ctzll(a),\
+    \ b >>= __builtin_ctzll(b);\n\twhile (a != b) {\n\t\tif (a > b) a -= b, b >>=\
+    \ __builtin_ctzll(b);\n\t\telse b -= a, a >>= __builtin_ctzll(a);\n\t}\n\treturn\
+    \ a << n;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"\
+    ));\n}\n#line 3 \"cpstl/ds/Segtree.hpp\"\n\nnamespace cpstd {\n\ntemplate <\n\t\
+    typename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass Segtree {\n\tprivate:\n\
+    \tstd::vector<S> dat;\n\tusize n, sz;\n\n\tvoid pushup(usize idx) {\n\t\twhile\
+    \ (idx > 1) {\n\t\t\tidx >>= 1;\n\t\t\tdat[idx] = operation(dat[idx * 2], dat[idx\
+    \ * 2 + 1]);\n\t\t}\n\t}\n\n\tpublic:\n\tSegtree() {}\n\t\n\texplicit Segtree(u32\
+    \ N) : Segtree(std::vector<S>(N, identity_elem())) {}\n\n\tSegtree(u32 N, const\
+    \ S &x) : Segtree(std::vector<S>(N, x)) {}\n\n\texplicit Segtree(const std::vector<S>\
+    \ &v) : n((u32)v.size()) {\n\t\tsz = std::bit_ceil(n);\n\t\tdat.assign(sz * 2,\
+    \ identity_elem());\n\t\tfor (usize i = 0; i < n; ++i) dat[sz + i] = v[i];\n\t\
+    \tfor (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2\
+    \ + 1]);\n\t}\n\n\tvoid set(usize idx, const S &x) {\n\t\tassert(idx < n);\n\t\
+    \tidx += sz;\n\t\tdat[idx] = x;\n\t\tpushup(idx);\n\t}\n\n\tvoid add(usize idx,\
     \ const S &x) {\n\t\tassert(idx < n);\n\t\tidx += sz;\n\t\tdat[idx] += x;\n\t\t\
     pushup(idx);\n\t}\n\n\tS fold(usize l, usize r) const {\n\t\tassert(l <= r &&\
     \ r <= n);\n\t\tS resl = identity_elem(), resr = identity_elem();\n\t\tfor (l\
@@ -234,7 +238,7 @@ data:
   isVerificationFile: false
   path: cpstl/ds/Segtree.hpp
   requiredBy: []
-  timestamp: '2025-10-30 20:16:54+09:00'
+  timestamp: '2025-10-31 00:47:43+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
