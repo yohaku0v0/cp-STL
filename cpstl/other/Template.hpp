@@ -10,3 +10,35 @@ using u32 = std::uint32_t;
 using u64 = std::uint64_t;
 using u128 = unsigned __int128_t;
 using usize = std::size_t;
+
+constexpr i64 SafeMod(i64 x, u64 m) {
+	x %= m;
+	if (x < 0) x += m;
+	return x;
+}
+
+constexpr u64 ModPow(i64 x, u64 n, u64 m) {
+	if (m == 1) return 0;
+	u64 res = 1, a = SafeMod(x, m);
+	while (n) {
+		if (n & 1) res = res * a % m;
+		a = a * a % m;
+		n >>= 1;
+	}
+	return res;
+}
+
+constexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {
+	if (m == 1) return 0;
+	u128 res = 1, a = (x < 0 ? x % m + m : x % m);
+	while (n) {
+		if (n & 1) res = res * a % m;
+		a = a * a % m;
+		n >>= 1;
+	}
+	return res;
+}
+
+void YN(bool flag) {
+	cpstd::println((flag ? "Yes" : "No"));
+}
