@@ -6,12 +6,9 @@ namespace cpstd {
 template <
 	typename S,
 	auto operation,
-	S identity_elem
+	auto identity_elem
 >
 class Dsu {
-	public:
-	using value_type = S;
-
 	private:
 	i32 n;
 	std::vector<std::pair<i32, S>> tree;
@@ -23,7 +20,7 @@ class Dsu {
 	public:
 	Dsu() {}
 
-	explicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem}) {}
+	explicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()}) {}
 	
 	explicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {
 		tree.resize(n);

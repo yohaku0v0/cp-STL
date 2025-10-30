@@ -4,11 +4,12 @@
 #include "cpstl/ds/Dsu.hpp"
 
 i32 op(i32 a, i32 b) { return a; }
+i32 e() { return 0; }
 
 int main() {
 	i32 N, Q;
 	cpstd::input(N, Q);
-	cpstd::Dsu<i32, op, 0> dsu(N);
+	cpstd::Dsu<i32, op, e> dsu(N);
 	i32 t, u, v;
 	while (Q--) {
 		cpstd::input(t, u, v);
