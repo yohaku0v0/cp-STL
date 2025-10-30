@@ -13,8 +13,8 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/ds/lc-Union-Find-Dsu.test.cpp
-    title: verify/ds/lc-Union-Find-Dsu.test.cpp
+    path: verify/math/lc-Primality-Test.test.cpp
+    title: verify/math/lc-Primality-Test.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -157,61 +157,47 @@ data:
     \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
     \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
     \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
-    \ : \"No\"));\n}\n#line 3 \"cpstl/ds/Dsu.hpp\"\n\nnamespace cpstd {\n\ntemplate\
-    \ <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass Dsu {\n\t\
-    private:\n\ti32 n;\n\tstd::vector<std::pair<i32, S>> tree;\n\n\ti32 _leader(i32\
-    \ x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
-    \t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()})\
-    \ {}\n\t\n\texplicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\
-    \t\tfor (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32\
-    \ x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32\
-    \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
-    a = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
-    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
-    tree[a].second = operation(tree[a].second, tree[b].second);\n\t\ttree[b].first\
-    \ = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32 a, i32 b) {\n\t\tassert(0 <=\
-    \ a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\treturn _leader(a) == _leader(b);\n\
-    \t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\
-    \t}\n\n\tS fold(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\
-    \t}\n\n\tstd::vector<std::vector<i32>> groups() {\n\t\tstd::vector<std::vector<i32>>\
-    \ mem, res;\n\t\tfor (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);\n\t\
-    \tfor (i32 i = 0; i < n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
+    \ : \"No\"));\n}\n#line 3 \"cpstl/math/MillerRabin.hpp\"\n\nnamespace cpstd {\n\
+    \nconstexpr bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n\
+    \ & 1)) return n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d &\
+    \ 1)) ++ s, d >>= 1;\n\twhile (!(d >> q)) --q;\n\tu64 r = n;\n\tfor (usize i =\
+    \ 0; i < 6; ++i) r *= 2 - r * n;\n\tu128 n2 = -(u128)n % n;\n\tauto reduction\
+    \ = [&](u128 t) noexcept -> u64 {\n\t\tt = (t + (u128)((u64)t * -r) * n) >> 64;\n\
+    \t\treturn t < n ? t : t - n;\n\t};\n\tu64 one = reduction(n2);\n\tfor (u64 base\
+    \ : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {\n\t\tif (!(base % n))\
+    \ continue;\n\t\tu64 a = base = reduction(base % n * n2);\n\t\tfor (i32 e = q\
+    \ - 1; e >= 0; --e) {\n\t\t\ta = reduction((u128)a * a);\n\t\t\tif (d >> e & 1)\
+    \ a = reduction((u128)a * base);\n\t\t}\n\t\tif (a == one) continue;\n\t\tfor\
+    \ (usize t = 1; (t < s && a != n - one); ++t) a = reduction((u128)a * a);\n\t\t\
+    if (a != n - one) return false;\n\t}\n\treturn true;\n}\n};\n"
   code: "#pragma once\n#include \"cpstl/other/Template.hpp\"\n\nnamespace cpstd {\n\
-    \ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem\n>\nclass\
-    \ Dsu {\n\tprivate:\n\ti32 n;\n\tstd::vector<std::pair<i32, S>> tree;\n\n\ti32\
-    \ _leader(i32 x) {\n\t\treturn tree[x].first < 0 ? x : tree[x].first = _leader(tree[x].first);\n\
-    \t}\n\n\tpublic:\n\tDsu() {}\n\n\texplicit Dsu(i32 N) : n(N), tree(N, {-1, identity_elem()})\
-    \ {}\n\t\n\texplicit Dsu(const std::vector<S> &v) : n((i32)v.size()) {\n\t\ttree.resize(n);\n\
-    \t\tfor (i32 i = 0; i < n; ++i) tree[i] = {-1, v[i]};\n\t}\n\n\ti32 leader(i32\
-    \ x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn _leader(x);\n\t}\n\n\tbool merge(i32\
-    \ a, i32 b) {\n\t\tassert(0 <= a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\t\
-    a = _leader(a), b = _leader(b);\n\t\tif (a == b) return false;\n\t\tif (tree[a].first\
-    \ > tree[b].first) std::swap(a, b);\n\t\ttree[a].first += tree[b].first;\n\t\t\
-    tree[a].second = operation(tree[a].second, tree[b].second);\n\t\ttree[b].first\
-    \ = a;\n\t\treturn true;\n\t}\n\n\tbool same(i32 a, i32 b) {\n\t\tassert(0 <=\
-    \ a && a < n);\n\t\tassert(0 <= b && b < n);\n\t\treturn _leader(a) == _leader(b);\n\
-    \t}\n\n\ti32 size(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn -tree[_leader(x)].first;\n\
-    \t}\n\n\tS fold(i32 x) {\n\t\tassert(0 <= x && x < n);\n\t\treturn tree[_leader(x)].first;\n\
-    \t}\n\n\tstd::vector<std::vector<i32>> groups() {\n\t\tstd::vector<std::vector<i32>>\
-    \ mem, res;\n\t\tfor (i32 i = 0; i < n; ++i) mem[_leader(i)].push_back(i);\n\t\
-    \tfor (i32 i = 0; i < n; ++i) {\n\t\t\tif (!mem[i].empty()) res.emplace_back(mem[i]);\n\
-    \t\t}\n\t\treturn res;\n\t}\n};\n};\n"
+    \nconstexpr bool MillerRabin(u64 n) {\n\tif (n <= 1) return false;\n\tif (!(n\
+    \ & 1)) return n == 2;\n\tu64 d = n - 1;\n\ti32 s = 0, q = 63;\n\twhile (!(d &\
+    \ 1)) ++ s, d >>= 1;\n\twhile (!(d >> q)) --q;\n\tu64 r = n;\n\tfor (usize i =\
+    \ 0; i < 6; ++i) r *= 2 - r * n;\n\tu128 n2 = -(u128)n % n;\n\tauto reduction\
+    \ = [&](u128 t) noexcept -> u64 {\n\t\tt = (t + (u128)((u64)t * -r) * n) >> 64;\n\
+    \t\treturn t < n ? t : t - n;\n\t};\n\tu64 one = reduction(n2);\n\tfor (u64 base\
+    \ : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {\n\t\tif (!(base % n))\
+    \ continue;\n\t\tu64 a = base = reduction(base % n * n2);\n\t\tfor (i32 e = q\
+    \ - 1; e >= 0; --e) {\n\t\t\ta = reduction((u128)a * a);\n\t\t\tif (d >> e & 1)\
+    \ a = reduction((u128)a * base);\n\t\t}\n\t\tif (a == one) continue;\n\t\tfor\
+    \ (usize t = 1; (t < s && a != n - one); ++t) a = reduction((u128)a * a);\n\t\t\
+    if (a != n - one) return false;\n\t}\n\treturn true;\n}\n};"
   dependsOn:
   - cpstl/other/Template.hpp
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
   isVerificationFile: false
-  path: cpstl/ds/Dsu.hpp
+  path: cpstl/math/MillerRabin.hpp
   requiredBy: []
   timestamp: '2025-10-30 20:16:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/ds/lc-Union-Find-Dsu.test.cpp
-documentation_of: cpstl/ds/Dsu.hpp
+  - verify/math/lc-Primality-Test.test.cpp
+documentation_of: cpstl/math/MillerRabin.hpp
 layout: document
 redirect_from:
-- /library/cpstl/ds/Dsu.hpp
-- /library/cpstl/ds/Dsu.hpp.html
-title: cpstl/ds/Dsu.hpp
+- /library/cpstl/math/MillerRabin.hpp
+- /library/cpstl/math/MillerRabin.hpp.html
+title: cpstl/math/MillerRabin.hpp
 ---

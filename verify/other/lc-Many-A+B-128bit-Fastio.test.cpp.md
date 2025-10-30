@@ -151,9 +151,17 @@ data:
     using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
-    using usize = std::size_t;\n#line 4 \"verify/other/lc-Many-A+B-128bit-Fastio.test.cpp\"\
-    \n\nint main() {\n\tint T;\n\tcpstd::input(T);\n\ti128 A, B;\n\twhile (T--) {\n\
-    \t\tcpstd::input(A, B);\n\t\tcpstd::println(A + B);\n\t}\n}\n"
+    using usize = std::size_t;\n\nconstexpr i64 SafeMod(i64 x, u64 m) {\n\tx %= m;\n\
+    \tif (x < 0) x += m;\n\treturn x;\n}\n\nconstexpr u64 ModPow(i64 x, u64 n, u64\
+    \ m) {\n\tif (m == 1) return 0;\n\tu64 res = 1, a = SafeMod(x, m);\n\twhile (n)\
+    \ {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\
+    \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
+    \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
+    \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
+    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
+    \ : \"No\"));\n}\n#line 4 \"verify/other/lc-Many-A+B-128bit-Fastio.test.cpp\"\n\
+    \nint main() {\n\tint T;\n\tcpstd::input(T);\n\ti128 A, B;\n\twhile (T--) {\n\t\
+    \tcpstd::input(A, B);\n\t\tcpstd::println(A + B);\n\t}\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n\
     #include \"cpstl/other/Template.hpp\"\n\nint main() {\n\tint T;\n\tcpstd::input(T);\n\
     \ti128 A, B;\n\twhile (T--) {\n\t\tcpstd::input(A, B);\n\t\tcpstd::println(A +\
@@ -165,7 +173,7 @@ data:
   isVerificationFile: true
   path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
   requiredBy: []
-  timestamp: '2025-10-30 19:11:20+09:00'
+  timestamp: '2025-10-30 20:16:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp

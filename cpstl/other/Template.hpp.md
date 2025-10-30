@@ -18,6 +18,9 @@ data:
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
   - icon: ':heavy_check_mark:'
+    path: cpstl/math/MillerRabin.hpp
+    title: cpstl/math/MillerRabin.hpp
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
   - icon: ':heavy_check_mark:'
@@ -33,6 +36,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Union-Find-Dsu.test.cpp
     title: verify/ds/lc-Union-Find-Dsu.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/math/lc-Primality-Test.test.cpp
+    title: verify/math/lc-Primality-Test.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
@@ -170,29 +176,27 @@ data:
     using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
-    using usize = std::size_t;\n"
-  code: '#pragma once
-
-    #include <bits/stdc++.h>
-
-    #include "cpstl/math/StaticModint.hpp"
-
-    #include "cpstl/other/Fastio.hpp"
-
-
-    using i32 = std::int32_t;
-
-    using i64 = std::int64_t;
-
-    using i128 = __int128_t;
-
-    using u32 = std::uint32_t;
-
-    using u64 = std::uint64_t;
-
-    using u128 = unsigned __int128_t;
-
-    using usize = std::size_t;'
+    using usize = std::size_t;\n\nconstexpr i64 SafeMod(i64 x, u64 m) {\n\tx %= m;\n\
+    \tif (x < 0) x += m;\n\treturn x;\n}\n\nconstexpr u64 ModPow(i64 x, u64 n, u64\
+    \ m) {\n\tif (m == 1) return 0;\n\tu64 res = 1, a = SafeMod(x, m);\n\twhile (n)\
+    \ {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\
+    \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
+    \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
+    \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
+    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
+    \ : \"No\"));\n}\n"
+  code: "#pragma once\n#include <bits/stdc++.h>\n#include \"cpstl/math/StaticModint.hpp\"\
+    \n#include \"cpstl/other/Fastio.hpp\"\n\nusing i32 = std::int32_t;\nusing i64\
+    \ = std::int64_t;\nusing i128 = __int128_t;\nusing u32 = std::uint32_t;\nusing\
+    \ u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\nusing usize = std::size_t;\n\
+    \nconstexpr i64 SafeMod(i64 x, u64 m) {\n\tx %= m;\n\tif (x < 0) x += m;\n\treturn\
+    \ x;\n}\n\nconstexpr u64 ModPow(i64 x, u64 n, u64 m) {\n\tif (m == 1) return 0;\n\
+    \tu64 res = 1, a = SafeMod(x, m);\n\twhile (n) {\n\t\tif (n & 1) res = res * a\
+    \ % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\treturn res;\n}\n\nconstexpr u128\
+    \ ModPow_u128(i128 x, u128 n, u128 m) {\n\tif (m == 1) return 0;\n\tu128 res =\
+    \ 1, a = (x < 0 ? x % m + m : x % m);\n\twhile (n) {\n\t\tif (n & 1) res = res\
+    \ * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\treturn res;\n}\n\nvoid YN(bool\
+    \ flag) {\n\tcpstd::println((flag ? \"Yes\" : \"No\"));\n}"
   dependsOn:
   - cpstl/math/StaticModint.hpp
   - cpstl/other/Fastio.hpp
@@ -203,13 +207,15 @@ data:
   - cpstl/ds/Segtree.hpp
   - cpstl/ds/Dsu.hpp
   - cpstl/math/StaticModint.hpp
+  - cpstl/math/MillerRabin.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-10-30 19:11:20+09:00'
+  timestamp: '2025-10-30 20:16:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp
   - verify/ds/lc-Union-Find-Dsu.test.cpp
+  - verify/math/lc-Primality-Test.test.cpp
   - verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
 documentation_of: cpstl/other/Template.hpp
 layout: document

@@ -15,6 +15,9 @@ data:
   - name: cpstl/math
     pages:
     - icon: ':heavy_check_mark:'
+      path: cpstl/math/MillerRabin.hpp
+      title: cpstl/math/MillerRabin.hpp
+    - icon: ':heavy_check_mark:'
       path: cpstl/math/StaticModint.hpp
       title: cpstl/math/StaticModint.hpp
   - name: cpstl/other
@@ -37,6 +40,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/ds/lc-Union-Find-Dsu.test.cpp
       title: verify/ds/lc-Union-Find-Dsu.test.cpp
+  - name: verify/math
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/math/lc-Primality-Test.test.cpp
+      title: verify/math/lc-Primality-Test.test.cpp
   - name: verify/other
     pages:
     - icon: ':heavy_check_mark:'

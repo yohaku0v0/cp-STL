@@ -154,15 +154,23 @@ data:
     using Fastio::flush;\n\n};\n#line 5 \"cpstl/other/Template.hpp\"\n\nusing i32\
     \ = std::int32_t;\nusing i64 = std::int64_t;\nusing i128 = __int128_t;\nusing\
     \ u32 = std::uint32_t;\nusing u64 = std::uint64_t;\nusing u128 = unsigned __int128_t;\n\
-    using usize = std::size_t;\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace\
-    \ cpstd {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\
-    \ttypename F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\n\
-    class LazySegtree {\n\tprivate:\n\tstd::vector<S> dat;\n\tstd::vector<F> lazy;\n\
-    \tusize n, sz, log;\n\n\tvoid propagate(usize idx, const F &f) {\n\t\tdat[idx]\
-    \ = mapping(f, dat[idx]);\n\t\tif (idx < sz) lazy[idx] = composition(f, lazy[idx]);\n\
-    \t}\n\n\tvoid pushdown(usize idx) {\n\t\tif (lazy[idx] == identity_map()) return;\n\
-    \t\tpropagate(idx * 2, lazy[idx]);\n\t\tpropagate(idx * 2 + 1, lazy[idx]);\n\t\
-    \tlazy[idx] = identity_map();\n\t}\n\n\tvoid merge(usize idx) { dat[idx] = operation(dat[idx\
+    using usize = std::size_t;\n\nconstexpr i64 SafeMod(i64 x, u64 m) {\n\tx %= m;\n\
+    \tif (x < 0) x += m;\n\treturn x;\n}\n\nconstexpr u64 ModPow(i64 x, u64 n, u64\
+    \ m) {\n\tif (m == 1) return 0;\n\tu64 res = 1, a = SafeMod(x, m);\n\twhile (n)\
+    \ {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\t}\n\
+    \treturn res;\n}\n\nconstexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {\n\tif\
+    \ (m == 1) return 0;\n\tu128 res = 1, a = (x < 0 ? x % m + m : x % m);\n\twhile\
+    \ (n) {\n\t\tif (n & 1) res = res * a % m;\n\t\ta = a * a % m;\n\t\tn >>= 1;\n\
+    \t}\n\treturn res;\n}\n\nvoid YN(bool flag) {\n\tcpstd::println((flag ? \"Yes\"\
+    \ : \"No\"));\n}\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace cpstd {\n\n\
+    template <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\ttypename\
+    \ F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\nclass LazySegtree\
+    \ {\n\tprivate:\n\tstd::vector<S> dat;\n\tstd::vector<F> lazy;\n\tusize n, sz,\
+    \ log;\n\n\tvoid propagate(usize idx, const F &f) {\n\t\tdat[idx] = mapping(f,\
+    \ dat[idx]);\n\t\tif (idx < sz) lazy[idx] = composition(f, lazy[idx]);\n\t}\n\n\
+    \tvoid pushdown(usize idx) {\n\t\tif (lazy[idx] == identity_map()) return;\n\t\
+    \tpropagate(idx * 2, lazy[idx]);\n\t\tpropagate(idx * 2 + 1, lazy[idx]);\n\t\t\
+    lazy[idx] = identity_map();\n\t}\n\n\tvoid merge(usize idx) { dat[idx] = operation(dat[idx\
     \ * 2], dat[idx * 2 + 1]); }\n\n\tvoid pushup(usize idx) {\n\t\twhile (idx > 1)\
     \ {\n\t\t\tidx >>= 1;\n\t\t\tmerge(idx);\n\t\t}\n\t}\n\n\tpublic:\n\tLazySegtree()\
     \ {}\n\n\texplicit LazySegtree(usize N) : LazySegtree(std::vector<S>(N, identity_elem()))\
@@ -247,7 +255,7 @@ data:
   isVerificationFile: true
   path: verify/ds/lc-Range-Affine-Range-sum.test.cpp
   requiredBy: []
-  timestamp: '2025-10-30 19:11:20+09:00'
+  timestamp: '2025-10-30 20:16:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/ds/lc-Range-Affine-Range-sum.test.cpp
