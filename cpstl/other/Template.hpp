@@ -39,6 +39,17 @@ constexpr u128 ModPow_u128(i128 x, u128 n, u128 m) {
 	return res;
 }
 
+constexpr u64 Binarygcd(u64 a, u64 b) {
+	if (!a || !b) return a | b;
+	const i32 n = __builtin_ctzll(a | b);
+	a >>= __builtin_ctzll(a), b >>= __builtin_ctzll(b);
+	while (a != b) {
+		if (a > b) a -= b, b >>= __builtin_ctzll(b);
+		else b -= a, a >>= __builtin_ctzll(a);
+	}
+	return a << n;
+}
+
 void YN(bool flag) {
 	cpstd::println((flag ? "Yes" : "No"));
 }
