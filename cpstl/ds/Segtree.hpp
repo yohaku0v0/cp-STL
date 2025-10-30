@@ -29,7 +29,7 @@ class Segtree {
 
 	explicit Segtree(const std::vector<S> &v) : n((u32)v.size()) {
 		sz = std::bit_ceil(n);
-		dat.assign(sz * 2, identity_elem);
+		dat.assign(sz * 2, identity_elem());
 		for (usize i = 0; i < n; ++i) dat[sz + i] = v[i];
 		for (usize i = sz - 1; i >= 1; --i) dat[i] = operation(dat[i * 2], dat[i * 2 + 1]);
 	}
