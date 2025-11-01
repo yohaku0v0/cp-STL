@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/LazySegtree.hpp
     title: cpstl/ds/LazySegtree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Template.hpp
     title: cpstl/other/Template.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/range_affine_range_sum
@@ -172,7 +172,7 @@ data:
     \ chmin(T &x, const Args&... args) {\n\tT old = x;\n\tfor (auto y : {args...})\
     \ x = std::min(x, y);\n\treturn x == old;\n}\n\ni64 isqrt(const i64 n) {\n\tassert(n\
     \ >= 0);\n\tif (n >= 9223372030926249001LL) return 3037000499LL;\n\ti64 res =\
-    \ std::sqrt(n);\n\twhile (res * res > x) --res;\n\twhile ((res + 1) * (res + 1)\
+    \ std::sqrt(n);\n\twhile (res * res > n) --res;\n\twhile ((res + 1) * (res + 1)\
     \ <= n) ++res;\n\treturn res;\n}\n#line 3 \"cpstl/ds/LazySegtree.hpp\"\n\nnamespace\
     \ cpstd {\n\ntemplate <\n\ttypename S,\n\tauto operation,\n\tauto identity_elem,\n\
     \ttypename F,\n\tauto mapping,\n\tauto composition,\n\tauto identity_map\n>\n\
@@ -266,8 +266,8 @@ data:
   isVerificationFile: true
   path: verify/ds/lc-Range-Affine-Range-sum.test.cpp
   requiredBy: []
-  timestamp: '2025-11-01 23:22:22+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-11-01 23:31:19+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/ds/lc-Range-Affine-Range-sum.test.cpp
 layout: document

@@ -1,56 +1,56 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/Dsu.hpp
     title: cpstl/ds/Dsu.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/LazySegtree.hpp
     title: cpstl/ds/LazySegtree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/ds/Segtree.hpp
     title: cpstl/ds/Segtree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/Factorize.hpp
     title: cpstl/math/Factorize.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/MillerRabin.hpp
     title: cpstl/math/MillerRabin.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/math/StaticModint.hpp
     title: cpstl/math/StaticModint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: cpstl/other/Fastio.hpp
     title: cpstl/other/Fastio.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
     title: verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Range-Affine-Range-sum.test.cpp
     title: verify/ds/lc-Range-Affine-Range-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/ds/lc-Union-Find-Dsu.test.cpp
     title: verify/ds/lc-Union-Find-Dsu.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/math/lc-Factorize.test.cpp
     title: verify/math/lc-Factorize.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/math/lc-Primality-Test.test.cpp
     title: verify/math/lc-Primality-Test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
     title: verify/other/lc-Many-A+B-128bit-Fastio.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"cpstl/other/Template.hpp\"\n#include <bits/stdc++.h>\n#line\
@@ -200,7 +200,7 @@ data:
     \ chmin(T &x, const Args&... args) {\n\tT old = x;\n\tfor (auto y : {args...})\
     \ x = std::min(x, y);\n\treturn x == old;\n}\n\ni64 isqrt(const i64 n) {\n\tassert(n\
     \ >= 0);\n\tif (n >= 9223372030926249001LL) return 3037000499LL;\n\ti64 res =\
-    \ std::sqrt(n);\n\twhile (res * res > x) --res;\n\twhile ((res + 1) * (res + 1)\
+    \ std::sqrt(n);\n\twhile (res * res > n) --res;\n\twhile ((res + 1) * (res + 1)\
     \ <= n) ++res;\n\treturn res;\n}\n"
   code: "#pragma once\n#include <bits/stdc++.h>\n#include \"cpstl/math/StaticModint.hpp\"\
     \n#include \"cpstl/other/Fastio.hpp\"\n\nusing i32 = std::int32_t;\nusing i64\
@@ -223,7 +223,7 @@ data:
     \ntemplate <typename T, class... Args>\nconstexpr bool chmin(T &x, const Args&...\
     \ args) {\n\tT old = x;\n\tfor (auto y : {args...}) x = std::min(x, y);\n\treturn\
     \ x == old;\n}\n\ni64 isqrt(const i64 n) {\n\tassert(n >= 0);\n\tif (n >= 9223372030926249001LL)\
-    \ return 3037000499LL;\n\ti64 res = std::sqrt(n);\n\twhile (res * res > x) --res;\n\
+    \ return 3037000499LL;\n\ti64 res = std::sqrt(n);\n\twhile (res * res > n) --res;\n\
     \twhile ((res + 1) * (res + 1) <= n) ++res;\n\treturn res;\n}"
   dependsOn:
   - cpstl/math/StaticModint.hpp
@@ -238,8 +238,8 @@ data:
   - cpstl/math/MillerRabin.hpp
   - cpstl/math/Factorize.hpp
   - cpstl/other/Fastio.hpp
-  timestamp: '2025-11-01 23:22:22+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2025-11-01 23:31:19+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/ds/lc-Point-Add-Range-Sum-Segtree.test.cpp
   - verify/ds/lc-Range-Affine-Range-sum.test.cpp
