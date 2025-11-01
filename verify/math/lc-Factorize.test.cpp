@@ -12,7 +12,7 @@ int main() {
 		auto f = cpstd::Factorize(N);
 		usize k = 0;
 		for (auto [p, e] : f) k += e;
-		cpstd::print_ns(k, ' ');
+		cpstd::print(k);
 		for (auto [p, e] : f) {
 			for (usize i = 0; i < e; ++i) cpstd::print_ns(' ', p);
 		}

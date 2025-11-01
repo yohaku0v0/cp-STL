@@ -53,3 +53,26 @@ constexpr u64 Binarygcd(u64 a, u64 b) {
 void YN(bool flag) {
 	cpstd::println((flag ? "Yes" : "No"));
 }
+
+template <typename T, class... Args>
+constexpr bool chmax(T &x, const Args&... args) {
+	T old = x;
+	for (auto y : {args...}) x = std::max(x, y);
+	return x == old;
+}
+
+template <typename T, class... Args>
+constexpr bool chmin(T &x, const Args&... args) {
+	T old = x;
+	for (auto y : {args...}) x = std::min(x, y);
+	return x == old;
+}
+
+i64 isqrt(const i64 n) {
+	assert(n >= 0);
+	if (n >= 9223372030926249001LL) return 3037000499LL;
+	i64 res = std::sqrt(n);
+	while (res * res > x) --res;
+	while ((res + 1) * (res + 1) <= n) ++res;
+	return res;
+}

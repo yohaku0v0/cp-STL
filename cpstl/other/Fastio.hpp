@@ -94,6 +94,7 @@ void input_int(T &x) {
 
 void _input(int &dest) { input_int(dest); }
 void _input(unsigned int &dest) { input_int(dest); }
+void _input(long &dest) { input_int(dest); }
 void _input(unsigned long &dest) { input_int(dest); }
 void _input(long long &dest) { input_int(dest); }
 void _input(unsigned long long &dest) { input_int(dest); }
@@ -180,6 +181,7 @@ void print_real(T tg) {
 
 void _print(int tg) { print_int(tg); }
 void _print(unsigned int tg) { print_int(tg); }
+void _print(long tg) { print_int(tg); }
 void _print(unsigned long tg) { print_int(tg);}
 void _print(long long tg) { print_int(tg); }
 void _print(unsigned long long tg) { print_int(tg); }
