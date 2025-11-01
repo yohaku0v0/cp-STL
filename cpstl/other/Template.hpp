@@ -58,14 +58,14 @@ template <typename T, class... Args>
 constexpr bool chmax(T &x, const Args&... args) {
 	T old = x;
 	for (auto y : {args...}) x = std::max(x, y);
-	return x == old;
+	return x != old;
 }
 
 template <typename T, class... Args>
 constexpr bool chmin(T &x, const Args&... args) {
 	T old = x;
 	for (auto y : {args...}) x = std::min(x, y);
-	return x == old;
+	return x != old;
 }
 
 i64 isqrt(const i64 n) {
